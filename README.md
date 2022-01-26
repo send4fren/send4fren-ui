@@ -2,14 +2,12 @@
 
 ### install the following tools
 
-node: 
-https://nodejs.org/en/download/
+node: https://nodejs.org/en/download/
 
-yarn: 
-https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
+yarn: https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
 
-ts-node: 
-https://www.npmjs.com/package/ts-node#installation
+ts-node: https://www.npmjs.com/package/ts-node#installation
+
 
 ### install packages and run server
 
