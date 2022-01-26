@@ -1,6 +1,6 @@
 # install instructions
 
-## install the following tools
+### install the following tools
 
 node: 
 https://nodejs.org/en/download/
@@ -11,7 +11,7 @@ https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
 ts-node: 
 https://www.npmjs.com/package/ts-node#installation
 
-## install packages and run server
+### install packages and run server
 
 ```
 yarn install && yarn start
