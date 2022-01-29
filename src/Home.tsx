@@ -222,7 +222,7 @@ const Home = (props: HomeProps) => {
 
               Nice Candy Machine
 
-              <Header candyMachine={niceCandyMachine} candyMachineName="Nice"/>
+              <Header candyMachine={niceCandyMachine}/>
               <MintContainer>
                 {niceCandyMachine?.state.isActive &&
                 niceCandyMachine?.state.gatekeeper &&
@@ -257,9 +257,9 @@ const Home = (props: HomeProps) => {
                 )}
               </MintContainer>
 
-              Naughty Candy Machine
+              <br></br>Naughty Candy Machine
 
-              <Header candyMachine={naughtyCandyMachine} candyMachineName="Naughty" />
+              <Header candyMachine={naughtyCandyMachine}/>
               <MintContainer>
                 {naughtyCandyMachine?.state.isActive &&
                 naughtyCandyMachine?.state.gatekeeper &&
@@ -294,9 +294,9 @@ const Home = (props: HomeProps) => {
                 )}
               </MintContainer>
 
-              Savage Candy Machine
+              <br></br>Savage Candy Machine
 
-              <Header candyMachine={savageCandyMachine} candyMachineName="Savage" />
+              <Header candyMachine={savageCandyMachine}/>
               <MintContainer>
                 {savageCandyMachine?.state.isActive &&
                 savageCandyMachine?.state.gatekeeper &&

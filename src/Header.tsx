@@ -6,45 +6,31 @@ import { MintCountdown } from './MintCountdown';
 import { toDate, formatNumber } from './utils';
 import { CandyMachineAccount } from './candy-machine';
 
-import { useEffect } from 'react';
-
 type HeaderProps = {
   candyMachine?: CandyMachineAccount;
-  candyMachineName: String;
 };
 
-export const Header = (props: HeaderProps) => {
-
-  const itemsRemainingId = "itemsRemaining"+props.candyMachineName;
-
-  useEffect(() => {
-    if (document.getElementById(itemsRemainingId)) {
-      document.getElementById(itemsRemainingId)!.innerHTML = String(props.candyMachine?.state.itemsRemaining);
-    }
-  }, [
-    props.candyMachine?.state.itemsRemaining
-  ]);
+export const Header = ({ candyMachine }: HeaderProps) => {
 
   return (
     <Grid container direction="row" justifyContent="center" wrap="nowrap">
       <Grid container direction="row" wrap="nowrap">
-        {props.candyMachine && (
+        {candyMachine && (
           <Grid container direction="row" wrap="nowrap">
-            <Grid container direction="column">
+            {/* <Grid container direction="column">
               <Typography variant="body2" color="textSecondary">
                 Remaining
               </Typography>
               <Typography
-                id={itemsRemainingId}
                 variant="h6"
                 color="textPrimary"
                 style={{
                   fontWeight: 'bold',
                 }}
               >
-                {`${props.candyMachine?.state.itemsRemaining}`}
+                {candyMachine.state.itemsRemaining}
               </Typography>
-            </Grid>
+            </Grid> */}
             <Grid container direction="column">
               <Typography variant="body2" color="textSecondary">
                 Price
@@ -54,24 +40,24 @@ export const Header = (props: HeaderProps) => {
                 color="textPrimary"
                 style={{ fontWeight: 'bold' }}
               >
-                {getMintPrice(props.candyMachine)}
+                {getMintPrice(candyMachine)}
               </Typography>
             </Grid>
           </Grid>
         )}
         <MintCountdown
           date={toDate(
-            props.candyMachine?.state.goLiveDate
-              ? props.candyMachine?.state.goLiveDate
-              : props.candyMachine?.state.isPresale
+            candyMachine?.state.goLiveDate
+              ? candyMachine?.state.goLiveDate
+              : candyMachine?.state.isPresale
               ? new anchor.BN(new Date().getTime() / 1000)
               : undefined,
           )}
           style={{ justifyContent: 'flex-end' }}
           status={
-            !props.candyMachine?.state?.isActive || props.candyMachine?.state?.isSoldOut
+            !candyMachine?.state?.isActive || candyMachine?.state?.isSoldOut
               ? 'COMPLETED'
-              : props.candyMachine?.state.isPresale
+              : candyMachine?.state.isPresale
               ? 'PRESALE'
               : 'LIVE'
           }
