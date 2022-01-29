@@ -2,6 +2,7 @@ import './App.css';
 import { useMemo } from 'react';
 import * as anchor from '@project-serum/anchor';
 import Home from './Home';
+import {ThemeProps, MintSelection} from './MintSelection'
 
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -70,8 +71,32 @@ const App = () => {
     [],
   );
 
+  const nice: ThemeProps = {
+    name: 'Nice',
+    description: "Send them a sweet message they'll be thinking about all day",
+    imgSrc: "images/SWEET_ShibaCupid.png",
+    imgSrcSet: "images/SWEET_ShibaCupid-p-500.png 500w, images/SWEET_ShibaCupid-p-800.png 800w, images/SWEET_ShibaCupid-p-1080.png 1080w, images/SWEET_ShibaCupid-p-1600.png 1600w, images/SWEET_ShibaCupid-p-2000.png 2000w, images/SWEET_ShibaCupid.png 2258w",
+    id: niceCandyMachineId
+  }
+  const naughty: ThemeProps = {
+    name: 'Naughty',
+    description: "Show them how they make you feel down south",
+    imgSrc: "images/NAUGHTY_Ahegao.png",
+    imgSrcSet: "images/NAUGHTY_Ahegao-p-500.png 500w, images/NAUGHTY_Ahegao-p-800.png 800w, images/NAUGHTY_Ahegao-p-1080.png 1080w, images/NAUGHTY_Ahegao-p-1600.png 1600w, images/NAUGHTY_Ahegao-p-2000.png 2000w, images/NAUGHTY_Ahegao.png 2450w",
+    id: naughtyCandyMachineId
+  }
+  const savage: ThemeProps = {
+    name: 'Savage',
+    description: "Roast them because you care about them",
+    imgSrc: "images/SAVAGE_AnimeWaifu.png",
+    imgSrcSet: "images/SAVAGE_AnimeWaifu-p-500.png 500w, images/SAVAGE_AnimeWaifu-p-800.png 800w, images/SAVAGE_AnimeWaifu-p-1080.png 1080w, images/SAVAGE_AnimeWaifu-p-1600.png 1600w, images/SAVAGE_AnimeWaifu-p-2000.png 2000w, images/SAVAGE_AnimeWaifu.png 2858w",
+    id: savageCandyMachineId
+  }
+  const collections: ThemeProps[] = [nice, naughty, savage]
+
   return (
     <ThemeProvider theme={theme}>
+      <MintSelection collections={collections}></MintSelection>
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
@@ -87,8 +112,9 @@ const App = () => {
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>
-    </ThemeProvider>
-  );
+
+        </ThemeProvider>
+        );
 };
 
-export default App;
+        export default App;
