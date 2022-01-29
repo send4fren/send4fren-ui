@@ -108,21 +108,21 @@ export const MintSelection: React.FC<{ collections: ThemeProps[] }> = ({ collect
                     <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100"
                         className="s4f_tabs w-tabs">
                         <div className="s4f_theme_options w-tab-menu">
-                            <a data-w-tab="Tab 1" className="s4f_theme_tab w-inline-block w-tab-link w--current"><img
+                            <a data-w-tab="Tab 1" className="s4f_theme_tab w-inline-block w-tab-link w--current" onClick={async ()=> {setTheme(0)}}><img
                                 src={collections[0].imgSrc} loading="lazy" width="66" sizes="(max-width: 479px) 76vw, 66px"
                                 srcSet={collections[0].imgSrcSet}
                                 alt="" className="image-13" />
                                 <div className="s4f_h3">{collections[0].name}</div>
                                 <p className="s4f_par s4f_theme_description">{collections[0].description}</p>
                             </a>
-                            <a data-w-tab="Tab 2" className="s4f_theme_tab w-inline-block w-tab-link"><img src={collections[1].imgSrc}
+                            <a data-w-tab="Tab 2" className="s4f_theme_tab w-inline-block w-tab-link" onClick={async ()=> {setTheme(1)}}><img src={collections[1].imgSrc}
                                 loading="lazy" width="62" sizes="(max-width: 479px) 76vw, 62px"
                                 srcSet={collections[1].imgSrcSet}
                                 alt="" className="image-12" />
                                 <div className="s4f_h3">{collections[1].name}</div>
                                 <p className="s4f_par s4f_theme_description">{collections[1].description}</p>
                             </a>
-                            <a data-w-tab="Tab 3" className="s4f_theme_tab w-inline-block w-tab-link"><img
+                            <a data-w-tab="Tab 3" className="s4f_theme_tab w-inline-block w-tab-link" onClick={async ()=> {setTheme(2)}}><img
                                 src={collections[2].imgSrc} loading="lazy" width="71" sizes="(max-width: 479px) 76vw, 71px"
                                 srcSet={collections[2].imgSrcSet}
                                 alt="" className="image-14" />
