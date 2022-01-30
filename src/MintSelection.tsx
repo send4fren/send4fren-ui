@@ -206,53 +206,46 @@ const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
     return (
 
         <Container>
-            <h2 className="s4f_h3">{theme.name}</h2>
-            <Container maxWidth="xs" style={{ position: 'relative' }}>
-                <Paper
-                    style={{ padding: 24, backgroundColor: '#151A1F', borderRadius: 6 }}
-                >
-                    {!wallet.connected ? (
-                        <ConnectButton>Connect Wallet</ConnectButton>
-                    ) : (
-                        <>
-                            <Header candyMachine={candyMachine0} />
-                            <MintContainer>
-                                {candyMachine0?.state.isActive &&
-                                    candyMachine0?.state.gatekeeper &&
-                                    wallet.publicKey &&
-                                    wallet.signTransaction ? (
-                                    <GatewayProvider
-                                        wallet={{
-                                            publicKey:
-                                                wallet.publicKey ||
-                                                new PublicKey(CANDY_MACHINE_PROGRAM),
-                                            //@ts-ignore
-                                            signTransaction: wallet.signTransaction,
-                                        }}
-                                        gatekeeperNetwork={
-                                            candyMachine0?.state?.gatekeeper?.gatekeeperNetwork
-                                        }
-                                        clusterUrl={rpcUrl}
-                                        options={{ autoShowModal: false }}
-                                    >
-                                        <MintButton
-                                            candyMachine={candyMachine0}
-                                            isMinting={isUserMinting}
-                                            onMint={onMint0}
-                                        />
-                                    </GatewayProvider>
-                                ) : (
-                                    <MintButton
-                                        candyMachine={candyMachine0}
-                                        isMinting={isUserMinting}
-                                        onMint={onMint0}
-                                    />
-                                )}
-                            </MintContainer>
-                        </>
-                    )}
-                </Paper>
-            </Container>
+            {!wallet.connected ? (
+                <ConnectButton>Connect Wallet</ConnectButton>
+            ) : (
+                <>
+                    <Header candyMachine={candyMachine0} />
+                    <MintContainer>
+                        {candyMachine0?.state.isActive &&
+                            candyMachine0?.state.gatekeeper &&
+                            wallet.publicKey &&
+                            wallet.signTransaction ? (
+                            <GatewayProvider
+                                wallet={{
+                                    publicKey:
+                                        wallet.publicKey ||
+                                        new PublicKey(CANDY_MACHINE_PROGRAM),
+                                    //@ts-ignore
+                                    signTransaction: wallet.signTransaction,
+                                }}
+                                gatekeeperNetwork={
+                                    candyMachine0?.state?.gatekeeper?.gatekeeperNetwork
+                                }
+                                clusterUrl={rpcUrl}
+                                options={{ autoShowModal: false }}
+                            >
+                                <MintButton
+                                    candyMachine={candyMachine0}
+                                    isMinting={isUserMinting}
+                                    onMint={onMint0}
+                                />
+                            </GatewayProvider>
+                        ) : (
+                            <MintButton
+                                candyMachine={candyMachine0}
+                                isMinting={isUserMinting}
+                                onMint={onMint0}
+                            />
+                        )}
+                    </MintContainer>
+                </>
+            )}
 
             <Snackbar
                 open={alertState.open}
