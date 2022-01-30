@@ -21,6 +21,7 @@ import {
 import { WalletDialogProvider } from '@solana/wallet-adapter-material-ui';
 
 import { ThemeProvider, createTheme } from '@material-ui/core';
+import { MintCountdown } from './MintCountdown';
 
 
 const theme = createTheme({
@@ -102,13 +103,23 @@ const App = () => {
     rpcHost: rpcHost
   }
 
+
+  // const d: Date = new Date('February 14, 2022 00:00:00') 
+  // d.setDate()
+
+  
   return (
     <ThemeProvider theme={theme}>
       {/* <MintSelection collection={collections} info={mintInfo}></MintSelection> */}
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
+            {/* DATE {d} */}
             <MintSelection collection={collections} info={mintInfo}></MintSelection>
+            {/* {d.getDate()}
+            <MintCountdown date={d}>
+              
+            </MintCountdown> */}
             {/* <Home
               niceCandyMachineId={niceCandyMachineId}
               naughtyCandyMachineId={naughtyCandyMachineId}

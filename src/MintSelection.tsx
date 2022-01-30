@@ -20,6 +20,9 @@ import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
 import { toDate, formatNumber } from './utils';
+import Typography from '@material-ui/core/Typography';
+import { string } from 'prop-types';
+import { LensTwoTone } from '@material-ui/icons';
 
 // Style for the connect button
 const ConnectButton = styled(WalletDialogButton)`
@@ -58,13 +61,44 @@ export interface ThemeProps {
     id?: anchor.web3.PublicKey
 }
 
+const DisplayMinted: React.FC<{ txId: string | undefined }> = (txId) => {
+    const solanaTxLink = "https://explorer.solana.com/tx/" + txId
+
+    const show = () => {
+        if (txId !== undefined) {
+            return (
+                <div className="columns-6 w-row">
+                    <div className="s4f_minted_card w-col w-col-6"><img src="images/Valentines-Example.png" loading="lazy"
+                        sizes="100vw" srcSet="images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w" alt=""
+                        className="image-3" /></div>
+                    <div className="column-9 w-col w-col-6">
+                        <a href="#" className="s4f_sol_exp">{solanaTxLink}click here to see transaction on Solana Explorer!</a>
+                        <h1 className="s4f_h3">share on</h1>
+                        <div className="div-block-7">
+                            <a href="#" className="s4f_button twitter w-button">Twitter</a>
+                            <a href="#" className="s4f_button facebook w-button">Facebook</a>
+                            <a href="#" className="s4f_button messenger w-button">Messenger</a>
+                            <a href="#" className="s4f_button instagram w-button">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else { (<div></div>) }
+    }
+
+    return (
+        <div>{show()}</div>
+
+    )
+}
+
 // The mint machine produces the box showing remaining, price and the mint button
 const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
     theme, props
 }) => {
     // Variables
     const [isUserMinting, setIsUserMinting] = useState(false);
-    const [candyMachine0, setCandyMachine0] = useState<CandyMachineAccount>();
+    const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
     // const [candyMachine1, setCandyMachine1] = useState<CandyMachineAccount>()
     // const [candyMachine2, setCandyMachine2] = useState<CandyMachineAccount>()
 
@@ -103,7 +137,7 @@ const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
                     theme.id,
                     props.connection,
                 );
-                setCandyMachine0(cndy);
+                setCandyMachine(cndy);
             } catch (e) {
                 console.log('There was a problem fetching Candy Machine state');
                 console.log(e);
@@ -120,9 +154,13 @@ const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
         props.connection
     ]);
 
-    const onMint0 = () => { return onMint(candyMachine0) };
+    // props.connection.getTransaction()
+
+    const onMintCandyMachine = () => { return onMint(candyMachine) };
     // const remaining = candyMachine0.state.itemsRemaining
     // const price = getMintPrice(candyMachine0)
+
+    const [txId, setTxId] = useState<string>();
 
     // Constants
     const onMint = async (candyMachine: CandyMachineAccount | undefined) => {
@@ -133,6 +171,7 @@ const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
                 const mintTxId = (
                     await mintOneToken(candyMachine, wallet.publicKey)
                 )[0];
+                setTxId(mintTxId);
 
                 let status: any = { err: true };
                 if (mintTxId) {
@@ -196,11 +235,40 @@ const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
         refreshCandyMachineState,
     ]);
 
+    // const getTxDetails = () => {
+    //     if (mintTxIdSaved) {
+    //         return mintTxIdSaved
+    //     }
+    // }
+
     // // Create an array of onMint functions for the number of candyMachines
     // let onMintArray = useState<CandyMachineAccount>()[]
     // for (let i = 0; i < props.collection.length; i++){
 
     // }
+
+    const showMinted = () => {
+        if (txId) {
+            return (
+                <div className="columns-6 w-row">
+                    <div className="s4f_minted_card w-col w-col-6"><img src="images/Valentines-Example.png" loading="lazy"
+                        sizes="100vw" srcSet="images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w" alt=""
+                        className="image-3" /></div>
+                    <div className="column-9 w-col w-col-6">
+                        <a href={"https://explorer.solana.com/tx/" + txId} className="s4f_sol_exp">click here to see transaction on Solana Explorer!</a>
+                        <h1 className="s4f_h3">share on</h1>
+                        <div className="div-block-7">
+                            <a href="#" className="s4f_button twitter w-button">Twitter</a>
+                            
+                            <a href="#" className="s4f_button facebook w-button">Facebook</a>
+                            <a href="#" className="s4f_button messenger w-button">Messenger</a>
+                            <a href="#" className="s4f_button instagram w-button">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
 
 
     return (
@@ -210,10 +278,10 @@ const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
                 <ConnectButton>Connect Wallet</ConnectButton>
             ) : (
                 <>
-                    <Header candyMachine={candyMachine0} />
+                    <Header candyMachine={candyMachine} />
                     <MintContainer>
-                        {candyMachine0?.state.isActive &&
-                            candyMachine0?.state.gatekeeper &&
+                        {candyMachine?.state.isActive &&
+                            candyMachine?.state.gatekeeper &&
                             wallet.publicKey &&
                             wallet.signTransaction ? (
                             <GatewayProvider
@@ -225,25 +293,28 @@ const MintMachine: React.FC<{ theme: ThemeProps, props: MintProps }> = ({
                                     signTransaction: wallet.signTransaction,
                                 }}
                                 gatekeeperNetwork={
-                                    candyMachine0?.state?.gatekeeper?.gatekeeperNetwork
+                                    candyMachine?.state?.gatekeeper?.gatekeeperNetwork
                                 }
                                 clusterUrl={rpcUrl}
                                 options={{ autoShowModal: false }}
                             >
                                 <MintButton
-                                    candyMachine={candyMachine0}
+                                    candyMachine={candyMachine}
                                     isMinting={isUserMinting}
-                                    onMint={onMint0}
+                                    onMint={onMintCandyMachine}
                                 />
                             </GatewayProvider>
                         ) : (
                             <MintButton
-                                candyMachine={candyMachine0}
+                                candyMachine={candyMachine}
                                 isMinting={isUserMinting}
-                                onMint={onMint0}
+                                onMint={onMintCandyMachine}
                             />
                         )}
+                        {showMinted()}
+
                     </MintContainer>
+
                 </>
             )}
 
@@ -346,23 +417,7 @@ export const MintSelection: React.FC<{ collection: ThemeProps[], info: MintInfo 
                         </div>
                     </div>
 
-                    <div className="div-block-3">
-                        <div className="columns-6 w-row">
-                            <div className="s4f_minted_card w-col w-col-6"><img src="images/Valentines-Example.png" loading="lazy"
-                                sizes="100vw" srcSet="images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w" alt=""
-                                className="image-3" /></div>
-                            <div className="column-9 w-col w-col-6">
-                                <a href="#" className="s4f_sol_exp">click here to see transaction on Solana Explorer!</a>
-                                <h1 className="s4f_h3">share on</h1>
-                                <div className="div-block-7">
-                                    <a href="#" className="s4f_button twitter w-button">Twitter</a>
-                                    <a href="#" className="s4f_button facebook w-button">Facebook</a>
-                                    <a href="#" className="s4f_button messenger w-button">Messenger</a>
-                                    <a href="#" className="s4f_button instagram w-button">Instagram</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
