@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { MintCountdown } from './MintCountdown';
 import { toDate, formatNumber } from './utils';
 import { CandyMachineAccount } from './candy-machine';
+import { Divider } from '@material-ui/core';
 
 type HeaderProps = {
   candyMachine?: CandyMachineAccount;

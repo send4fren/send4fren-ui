@@ -17,24 +17,37 @@ import { useEffect, useState } from 'react';
 // `; // add your own styles here
 
 export const CTAButton = styled(Button)`
-  display: inline-block;
+  width: 100%;
+  height: 60px;
   margin-top: 10px;
-  margin-bottom: 10px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 25px;
+  margin-bottom: 5px;
   background-color: #f7891e;
   box-shadow: 3px 3px 4px 0 #3a3a3a;
-  font-family: 'Varela Round', sans-serif;
-  font-size: 24px;
-  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
 `; // add your own styles here
+
+// export const CTAButton = styled(Button)`
+//   display: inline-block;
+//   margin-top: 10px;
+//   margin-bottom: 10px;
+//   -webkit-box-pack: center;
+//   -webkit-justify-content: center;
+//   -ms-flex-pack: center;
+//   justify-content: center;
+//   -webkit-box-align: center;
+//   -webkit-align-items: center;
+//   -ms-flex-align: center;
+//   align-items: center;
+//   border-radius: 25px;
+//   background-color: #f7891e;
+//   box-shadow: 3px 3px 4px 0 #3a3a3a;
+//   font-family: 'Varela Round', sans-serif;
+//   font-size: 24px;
+//   text-align: center;
+// `; // add your own styles here
 
 export const MintButton = ({
   onMint,
@@ -64,7 +77,7 @@ export const MintButton = ({
       return 'PRESALE MINT';
     }
 
-    return 'MINT';
+    return 'mint now';
   };
 
   return (

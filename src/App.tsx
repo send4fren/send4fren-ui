@@ -2,7 +2,7 @@ import './App.css';
 import { useMemo } from 'react';
 import * as anchor from '@project-serum/anchor';
 import Home from './Home';
-import {ThemeProps, MintSelection} from './MintSelection'
+import {ThemeProps, MintSelection, MintProps} from './MintSelection'
 
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -21,6 +21,7 @@ import {
 import { WalletDialogProvider } from '@solana/wallet-adapter-material-ui';
 
 import { ThemeProvider, createTheme } from '@material-ui/core';
+
 
 const theme = createTheme({
   palette: {
@@ -94,13 +95,21 @@ const App = () => {
   }
   const collections: ThemeProps[] = [nice, naughty, savage]
 
+  const mintInfo: MintProps = {
+    connection: connection,
+    startDate: startDateSeed,
+    txTimeout: txTimeoutInMilliseconds,
+    rpcHost: rpcHost
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <MintSelection collections={collections}></MintSelection>
+      {/* <MintSelection collection={collections} info={mintInfo}></MintSelection> */}
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
-            <Home
+            <MintSelection collection={collections} info={mintInfo}></MintSelection>
+            {/* <Home
               niceCandyMachineId={niceCandyMachineId}
               naughtyCandyMachineId={naughtyCandyMachineId}
               savageCandyMachineId={savageCandyMachineId}
@@ -108,7 +117,7 @@ const App = () => {
               startDate={startDateSeed}
               txTimeout={txTimeoutInMilliseconds}
               rpcHost={rpcHost}
-            />
+            /> */}
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>

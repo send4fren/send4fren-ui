@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import * as anchor from '@project-serum/anchor';
 
+import { ThemeProps } from './MintSelection';
 import styled from 'styled-components';
 import { Container, Snackbar } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -31,7 +32,9 @@ const ConnectButton = styled(WalletDialogButton)`
   font-weight: bold;
 `;
 
+
 const MintContainer = styled.div``; // add your owns styles here
+
 
 export interface HomeProps {
   niceCandyMachineId?: anchor.web3.PublicKey;
@@ -42,6 +45,14 @@ export interface HomeProps {
   txTimeout: number;
   rpcHost: string;
 }
+
+// export interface HomeProps{
+//   collection: ThemeProps[];
+//   connection: anchor.web3.Connection;
+//   startDate: number;
+//   txTimeout: number;
+//   rpcHost: string;
+// }
 
 const Home = (props: HomeProps) => {
   const [isUserMinting, setIsUserMinting] = useState(false);
@@ -119,10 +130,10 @@ const Home = (props: HomeProps) => {
       }
     }
   }, [
-    anchorWallet, 
-    props.niceCandyMachineId, 
-    props.naughtyCandyMachineId, 
-    props.savageCandyMachineId, 
+    anchorWallet,
+    props.niceCandyMachineId,
+    props.naughtyCandyMachineId,
+    props.savageCandyMachineId,
     props.connection
   ]);
 
@@ -202,8 +213,8 @@ const Home = (props: HomeProps) => {
     refreshCandyMachineState();
   }, [
     anchorWallet,
-    props.niceCandyMachineId, 
-    props.naughtyCandyMachineId, 
+    props.niceCandyMachineId,
+    props.naughtyCandyMachineId,
     props.savageCandyMachineId,
     props.connection,
     refreshCandyMachineState,
@@ -225,9 +236,9 @@ const Home = (props: HomeProps) => {
               <Header candyMachine={niceCandyMachine} />
               <MintContainer>
                 {niceCandyMachine?.state.isActive &&
-                niceCandyMachine?.state.gatekeeper &&
-                wallet.publicKey &&
-                wallet.signTransaction ? (
+                  niceCandyMachine?.state.gatekeeper &&
+                  wallet.publicKey &&
+                  wallet.signTransaction ? (
                   <GatewayProvider
                     wallet={{
                       publicKey:
@@ -262,9 +273,9 @@ const Home = (props: HomeProps) => {
               <Header candyMachine={naughtyCandyMachine} />
               <MintContainer>
                 {naughtyCandyMachine?.state.isActive &&
-                naughtyCandyMachine?.state.gatekeeper &&
-                wallet.publicKey &&
-                wallet.signTransaction ? (
+                  naughtyCandyMachine?.state.gatekeeper &&
+                  wallet.publicKey &&
+                  wallet.signTransaction ? (
                   <GatewayProvider
                     wallet={{
                       publicKey:
@@ -296,12 +307,12 @@ const Home = (props: HomeProps) => {
 
               Savage Candy Machine
 
-              <Header candyMachine={savageCandyMachine}/>
+              <Header candyMachine={savageCandyMachine} />
               <MintContainer>
                 {savageCandyMachine?.state.isActive &&
-                savageCandyMachine?.state.gatekeeper &&
-                wallet.publicKey &&
-                wallet.signTransaction ? (
+                  savageCandyMachine?.state.gatekeeper &&
+                  wallet.publicKey &&
+                  wallet.signTransaction ? (
                   <GatewayProvider
                     wallet={{
                       publicKey:
@@ -350,5 +361,8 @@ const Home = (props: HomeProps) => {
     </Container>
   );
 };
+
+
+
 
 export default Home;
