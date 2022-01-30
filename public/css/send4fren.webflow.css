@@ -249,6 +249,7 @@
 }
 
 .s4f_h3.s4f_countdown_value {
+  margin-bottom: -9px;
   border-radius: 5px;
   background-color: #fff;
   color: #000;
