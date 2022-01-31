@@ -2,7 +2,7 @@ import './App.css';
 import { useMemo } from 'react';
 import * as anchor from '@project-serum/anchor';
 import Home from './Home';
-import {ThemeProps, MintSelection, MintProps} from './MintSelection'
+import {ThemeProps, MintSelection, MintProps, CollectionProps} from './MintSelection'
 
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -94,7 +94,17 @@ const App = () => {
     imgSrcSet: "images/SAVAGE_AnimeWaifu-p-500.png 500w, images/SAVAGE_AnimeWaifu-p-800.png 800w, images/SAVAGE_AnimeWaifu-p-1080.png 1080w, images/SAVAGE_AnimeWaifu-p-1600.png 1600w, images/SAVAGE_AnimeWaifu-p-2000.png 2000w, images/SAVAGE_AnimeWaifu.png 2858w",
     id: savageCandyMachineId
   }
-  const collections: ThemeProps[] = [nice, naughty, savage]
+  const vdayCollection: CollectionProps = {
+    collection: [nice, naughty, savage],
+    title: "Valentine's Day",
+    subtitle: "Spoil 'em",
+    description: "1402 unique Valentine's day themed greeting cards with Nice, Naughty and Savage crypto memes to make hearts flutter, parts throbbing or blood boiling",
+    imgSrc: "images/Valentines-Example.png",
+    imgSrcSet: "images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w"
+
+  }
+
+  const collections = [vdayCollection]
 
   const mintInfo: MintProps = {
     connection: connection,
@@ -110,12 +120,14 @@ const App = () => {
   
   return (
     <ThemeProvider theme={theme}>
+      
       {/* <MintSelection collection={collections} info={mintInfo}></MintSelection> */}
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
             {/* DATE {d} */}
-            <MintSelection collection={collections} info={mintInfo}></MintSelection>
+            <Home collections={collections} props={mintInfo}></Home>
+            <MintSelection collection={collections[0].collection} info={mintInfo}></MintSelection>
             {/* {d.getDate()}
             <MintCountdown date={d}>
               

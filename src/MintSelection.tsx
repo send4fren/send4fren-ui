@@ -23,6 +23,7 @@ import { toDate, formatNumber } from './utils';
 import Typography from '@material-ui/core/Typography';
 import { string } from 'prop-types';
 import { LensTwoTone } from '@material-ui/icons';
+import { StringLiteralLike } from 'typescript';
 
 // Style for the connect button
 const ConnectButton = styled(WalletDialogButton)`
@@ -61,6 +62,14 @@ export interface ThemeProps {
     id?: anchor.web3.PublicKey
 }
 
+export interface CollectionProps {
+    collection: ThemeProps[];
+    title: string;
+    subtitle: string;
+    description: string;
+    imgSrc: string;
+    imgSrcSet: string;
+}
 const DisplayMinted: React.FC<{ txId: string | undefined }> = (txId) => {
     const solanaTxLink = "https://explorer.solana.com/tx/" + txId
 

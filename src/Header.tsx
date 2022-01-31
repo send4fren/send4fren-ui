@@ -63,6 +63,7 @@ export const Header = ({ candyMachine }: HeaderProps) => {
               : 'LIVE'
           }
         />
+        
       </Grid>
     </Grid>
   );
