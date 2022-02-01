@@ -7,6 +7,7 @@ import {
 	mintOneToken,
 } from './candy-machine';
 import * as anchor from '@project-serum/anchor';
+import { programs } from "@metaplex/js"
 
 import styled from 'styled-components';
 import { Container, Snackbar } from '@material-ui/core';
@@ -24,8 +25,7 @@ import Typography from '@material-ui/core/Typography';
 import { string } from 'prop-types';
 import { LensTwoTone } from '@material-ui/icons';
 import { StringLiteralLike } from 'typescript';
-// import { getParsedNftAccountsByOwner,isValidSolanaAddress, createConnectionConfig,} from "@nfteyez/sol-rayz";
-
+import { getParsedNftAccountsByOwner, isValidSolanaAddress, createConnectionConfig, } from "@nfteyez/sol-rayz";
 
 
 
@@ -471,7 +471,7 @@ interface CandyMutualProps {
 
 export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps) => {
 	// REMOVE LATER
-	mutual.setTxId("2cshdLj3QCMfnvp3ihaKCMq2o3L1Mr64jBTYP7N8Lr4JArBdSHLpFKRrLegj6pv6K2SLFjtM7fncr5LCVaopFMvN")
+	// mutual.setTxId("2cshdLj3QCMfnvp3ihaKCMq2o3L1Mr64jBTYP7N8Lr4JArBdSHLpFKRrLegj6pv6K2SLFjtM7fncr5LCVaopFMvN")
 
 	return (
 		<Container>
@@ -512,7 +512,7 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
 								onMint={() => OnMint(candyMachine, mutual, info)}
 							/>
 						)}
-						<MintFinish txId={mutual?.txId} connection={info.connection} />
+						<MintFinish txId={mutual?.txId} connection={info.connection} wallet={mutual.wallet} />
 
 					</MintContainer>
 				</>
@@ -859,22 +859,55 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
 	)
 }
 
-const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.Connection }> = ({ txId, connection }) => {
+const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.Connection, wallet: WalletContextState }> = ({ txId, connection, wallet }) => {
 
-	// const [image, setImage] = useState<string>()
+	const [image, setImage] = useState<string>()
 	// if (txId) {
 
 	// }
-	const [data, setData] = useState<(number | null | undefined)>();
+	// const [data, setData] = useState<(number | null | undefined)>();
+
 	const txInfo = (async () => {
 		if (txId) {
 			const result = await connection.getTransaction(txId)
-			setData(result?.blockTime)
-			
-			console.log(result)
+			// setData(result?.meta?.postBalances)
+			if (result?.meta?.postTokenBalances) {
+				const token = result.meta.postTokenBalances[0].mint
+				console.log(token)
+
+				if (wallet?.publicKey) {
+					const tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, wallet?.publicKey?.toString());
+					for (var nft of tokenMetadata){
+						if (nft.mint == token) {
+							
+							const nftData = await fetch(nft.data.uri)
+							const fileData = await fetch(nftData.url).then((d) => { return d.json()})
+							setImage(fileData.image)
+							// console.log(nft.data.uri)
+							// console.log(nftData.url)
+							// console.log(nftData)
+							// console.log(fileData.image)
+							break;
+						}
+					}
+					console.log(tokenMetadata);
+				}
+
+
+
+
+				// const block = await connection.getBlock(token)
+				// console.log(block)
+			}
+
+
 
 		}
 	})
+
+	useEffect(() => {
+		txInfo()
+	}, [txId, image])
 
 	// const tx = async () => {
 	// 	console.log('egegre')
@@ -898,8 +931,8 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 				txId ?
 					(
 						<div className="columns-6 w-row" >
-							<div className="s4f_minted_card w-col w-col-6"><img src="images/Valentines-Example.png" loading="lazy"
-								sizes="100vw" srcSet="images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w" alt=""
+							<div className="s4f_minted_card w-col w-col-6"><img src={image} loading="lazy"
+								sizes="100vw"  alt=""
 								className="image-3" /></div>
 							<div className="column-9 w-col w-col-6">
 								<a href={"https://explorer.solana.com/tx/" + txId} target="_blank" className="s4f_sol_exp">click here to see transaction on Solana Explorer!</a>
@@ -910,14 +943,14 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 									<a href="#" className="s4f_button facebook w-button">Facebook</a>
 									<a href="#" className="s4f_button messenger w-button">Messenger</a>
 									<a href="#" className="s4f_button instagram w-button">Instagram</a>
-									{async () => await txInfo()}
-									{data}
+									{/* {async () => await txInfo()} */}
+									{/* {data} */}
 								</div>
 							</div>
 						</div >
 					) : (<div />)}
 
-			)
+
 		</div>)
 
 }
