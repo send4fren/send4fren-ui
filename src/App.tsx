@@ -1,8 +1,8 @@
 import './App.css';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import * as anchor from '@project-serum/anchor';
 import Home from './Home';
-import {ThemeProps, MintSelection, MintProps, CollectionProps} from './MintSelection'
+import {ThemeProps, MintProps, CollectionProps, MintSection, MintCollection} from './MintSelection'
 
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -95,7 +95,7 @@ const App = () => {
     id: savageCandyMachineId
   }
   const vdayCollection: CollectionProps = {
-    collection: [nice, naughty, savage],
+    themes: [nice, naughty, savage],
     title: "Valentine's Day",
     subtitle: "Spoil 'em",
     description: "1402 unique Valentine's day themed greeting cards with Nice, Naughty and Savage crypto memes to make hearts flutter, parts throbbing or blood boiling",
@@ -104,7 +104,17 @@ const App = () => {
 
   }
 
-  const collections = [vdayCollection]
+  const bdayCollection: CollectionProps = {
+    themes: [nice, naughty, savage],
+    title: "Birthday Day",
+    subtitle: "Fucke them up",
+    description: "1000 ways to make it go with a bang",
+    imgSrc: "images/Valentines-Example.png",
+    imgSrcSet: "images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w"
+
+  }
+
+  const collections = [vdayCollection, bdayCollection]
 
   const mintInfo: MintProps = {
     connection: connection,
@@ -116,7 +126,7 @@ const App = () => {
 
   // const d: Date = new Date('February 14, 2022 00:00:00') 
   // d.setDate()
-
+  const [selected, setSelected] = useState<number>(0)
   
   return (
     <ThemeProvider theme={theme}>
@@ -125,22 +135,11 @@ const App = () => {
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
-            {/* DATE {d} */}
-            <Home collections={collections} props={mintInfo}></Home>
-            <MintSelection collection={collections[0].collection} info={mintInfo}></MintSelection>
-            {/* {d.getDate()}
-            <MintCountdown date={d}>
+            <Home basedOnIdx={0} collections={collections} props={mintInfo}>
               
-            </MintCountdown> */}
-            {/* <Home
-              niceCandyMachineId={niceCandyMachineId}
-              naughtyCandyMachineId={naughtyCandyMachineId}
-              savageCandyMachineId={savageCandyMachineId}
-              connection={connection}
-              startDate={startDateSeed}
-              txTimeout={txTimeoutInMilliseconds}
-              rpcHost={rpcHost}
-            /> */}
+            </Home>
+            
+            {/* <MintSelection collection={collections[0].collection} info={mintInfo}></MintSelection> */}
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>

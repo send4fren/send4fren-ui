@@ -574,8 +574,9 @@
   background-color: #f7891e;
   box-shadow: 3px 3px 4px 0 #3a3a3a;
   font-family: 'Varela Round', sans-serif;
-  font-size: 24px;
+  font-size: 16px;
   text-align: center;
+  font-weight: bold;
 }
 
 .s4f_mint_button.s4f_nav_version {
