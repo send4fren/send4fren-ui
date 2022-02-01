@@ -467,6 +467,8 @@ interface CandyMutualProps {
 	anchorWallet: anchor.Wallet | undefined,
 	txId: string | undefined,
 	setTxId: React.Dispatch<React.SetStateAction<string | undefined>>
+	mintSuccess: boolean, 
+	setMintSuccess: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps) => {
@@ -512,7 +514,7 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
 								onMint={() => OnMint(candyMachine, mutual, info)}
 							/>
 						)}
-						<MintFinish txId={mutual?.txId} connection={info.connection} wallet={mutual.wallet} />
+						<MintFinish txId={mutual?.txId} connection={info.connection} mutual={mutual} />
 
 					</MintContainer>
 				</>
@@ -555,6 +557,7 @@ const OnMint = async (candyMachine: CandyMachineAccount | undefined, mutual: Can
 			}
 
 			if (status && !status.err) {
+				mutual.setMintSuccess(true)
 				mutual.setAlertState({
 					open: true,
 					message: 'Congratulations! Mint succeeded!',
@@ -632,6 +635,8 @@ const CreateCandyMachine = (candyId: anchor.web3.PublicKey | undefined, mutual: 
 		candyId,
 		info.connection,
 		refreshCandyMachineState,
+		mutual.setTxId,
+		mutual.txId
 	]);
 
 	return candyMachine
@@ -644,6 +649,7 @@ export const MintSection: React.FC<{ allCollections: CollectionProps[], info: Mi
 	const [selectedCandyMachine, setSelectedCandyMachine] = useState<CandyMachineAccount | undefined>()
 	const [txId, setTxId] = useState<string>();
 	const [theme, setTheme] = useState<number>();
+	const [mintSuccess, setMintSuccess] = useState(false)
 
 	// Wallet
 	// const [isUserMinting, setIsUserMinting] = useState(false);
@@ -680,7 +686,9 @@ export const MintSection: React.FC<{ allCollections: CollectionProps[], info: Mi
 		wallet: phantom.wallet,
 		anchorWallet: phantom.anchorWallet,
 		txId: txId,
-		setTxId: setTxId
+		setTxId: setTxId,
+		mintSuccess: mintSuccess,
+		setMintSuccess: setMintSuccess
 	}
 	const machines = [
 		CreateCandyMachine(allCollections[selectedCollection].themes[0].id, mutual, info),
@@ -713,7 +721,7 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
 	const [description, setDescription] = useState<string>(allCollections[0].description)
 	const [image, setImage] = useState<string>(allCollections[0].imgSrc)
 	const showCollections = allCollections.map((col, index) =>
-		(<option value={index}>{col.title}</option>)
+		(<option key={index}>{col.title}</option>)
 	)
 	useEffect(() => {
 		if (changed) {
@@ -859,7 +867,7 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
 	)
 }
 
-const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.Connection, wallet: WalletContextState }> = ({ txId, connection, wallet }) => {
+const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.Connection, mutual: CandyMutualProps }> = ({ txId, connection, mutual }) => {
 
 	const [image, setImage] = useState<string>()
 	// if (txId) {
@@ -867,16 +875,17 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 	// }
 	// const [data, setData] = useState<(number | null | undefined)>();
 
-	const txInfo = (async () => {
-		if (txId) {
+	const txInfo = useCallback((async () => {
+		
+		if (txId && mutual.mintSuccess) {
 			const result = await connection.getTransaction(txId)
 			// setData(result?.meta?.postBalances)
 			if (result?.meta?.postTokenBalances) {
 				const token = result.meta.postTokenBalances[0].mint
 				console.log(token)
 
-				if (wallet?.publicKey) {
-					const tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, wallet?.publicKey?.toString());
+				if (mutual.wallet?.publicKey) {
+					const tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, mutual.wallet?.publicKey?.toString());
 					for (var nft of tokenMetadata){
 						if (nft.mint == token) {
 							
@@ -886,7 +895,8 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 							// console.log(nft.data.uri)
 							// console.log(nftData.url)
 							// console.log(nftData)
-							// console.log(fileData.image)
+							console.log(fileData.image)
+							mutual.setMintSuccess(false)
 							break;
 						}
 					}
@@ -903,11 +913,11 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 
 
 		}
-	})
+	}), [txId, mutual.mintSuccess, image, setImage, mutual.setAlertState, mutual.anchorWallet, connection, mutual.isUserMinting])
 
 	useEffect(() => {
 		txInfo()
-	}, [txId, image])
+	}, [txId, mutual.mintSuccess, image, setImage, mutual.setAlertState, mutual.anchorWallet, connection, mutual.isUserMinting])
 
 	// const tx = async () => {
 	// 	console.log('egegre')
@@ -935,6 +945,7 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 								sizes="100vw"  alt=""
 								className="image-3" /></div>
 							<div className="column-9 w-col w-col-6">
+								<button onClick={async () => txInfo()} >View</button>
 								<a href={"https://explorer.solana.com/tx/" + txId} target="_blank" className="s4f_sol_exp">click here to see transaction on Solana Explorer!</a>
 								<h1 className="s4f_h3">share on</h1>
 								<div className="div-block-7">
@@ -943,12 +954,13 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 									<a href="#" className="s4f_button facebook w-button">Facebook</a>
 									<a href="#" className="s4f_button messenger w-button">Messenger</a>
 									<a href="#" className="s4f_button instagram w-button">Instagram</a>
-									{/* {async () => await txInfo()} */}
+									
 									{/* {data} */}
 								</div>
 							</div>
 						</div >
-					) : (<div />)}
+					) : (<div />)
+					}
 
 
 		</div>)
