@@ -1,7 +1,7 @@
 import * as anchor from '@project-serum/anchor';
 
-import { MintLayout, TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
-import { SystemProgram } from '@solana/web3.js';
+import { MintLayout, TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { PublicKey, SystemProgram } from '@solana/web3.js';
 import { sendTransactions } from './connection';
 
 import {
@@ -246,6 +246,7 @@ export const getCandyMachineCreator = async (
 export const mintOneToken = async (
   candyMachine: CandyMachineAccount,
   payer: anchor.web3.PublicKey,
+  // dest: anchor.web3.PublicKey | undefined
 ): Promise<(string | undefined)[]> => {
   const mint = anchor.web3.Keypair.generate();
 
@@ -441,6 +442,41 @@ export const mintOneToken = async (
         remainingAccounts.length > 0 ? remainingAccounts : undefined,
     }),
   );
+
+  // Instructions for sending to dest address
+  // dest = new PublicKey('5NkwxTxUaVTnwVn4mMurtrpDKqMbDTmn18ig9uCawVrG')
+  // if (dest) {
+  //   let dest_ata = await Token.getAssociatedTokenAddress(
+  //     ASSOCIATED_TOKEN_PROGRAM_ID,
+  //     TOKEN_PROGRAM_ID,
+  //     mint.publicKey,
+  //     dest
+  //   )
+
+  //   instructions.push(
+  //     Token.createAssociatedTokenAccountInstruction(
+  //       ASSOCIATED_TOKEN_PROGRAM_ID,
+  //       TOKEN_PROGRAM_ID,
+  //       mint.publicKey,
+  //       dest_ata,
+  //       dest,
+  //       payer
+  //     )
+  //   )
+
+  //   instructions.push(
+  //     Token.createTransferCheckedInstruction(
+  //       TOKEN_PROGRAM_ID,
+  //       userTokenAccountAddress, // LIKELY PROBLEM LINE
+  //       mint.publicKey,
+  //       dest_ata,
+  //       payer,
+  //       [],
+  //       1e8,
+  //       8
+  //     )
+  //   )
+  // }
 
   try {
     return (
