@@ -24,6 +24,10 @@ import Typography from '@material-ui/core/Typography';
 import { string } from 'prop-types';
 import { LensTwoTone } from '@material-ui/icons';
 import { StringLiteralLike } from 'typescript';
+// import { getParsedNftAccountsByOwner,isValidSolanaAddress, createConnectionConfig,} from "@nfteyez/sol-rayz";
+
+
+
 
 // Style for the connect button
 export const ConnectButton = styled(WalletDialogButton)`
@@ -87,36 +91,36 @@ export interface PhantomProps {
 	anchorWallet: anchor.Wallet | undefined;
 
 }
-const DisplayMinted: React.FC<{ txId: string | undefined }> = (txId) => {
-	const solanaTxLink = "https://explorer.solana.com/tx/" + txId
+// const DisplayMinted: React.FC<{ txId: string | undefined }> = (txId) => {
+// 	const solanaTxLink = "https://explorer.solana.com/tx/" + txId
 
-	const show = () => {
-		if (txId !== undefined) {
-			return (
-				<div className="columns-6 w-row">
-					<div className="s4f_minted_card w-col w-col-6"><img src="images/Valentines-Example.png" loading="lazy"
-						sizes="100vw" srcSet="images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w" alt=""
-						className="image-3" /></div>
-					<div className="column-9 w-col w-col-6">
-						<a href="#" className="s4f_sol_exp">{solanaTxLink}click here to see transaction on Solana Explorer!</a>
-						<h1 className="s4f_h3">share on</h1>
-						<div className="div-block-7">
-							<a href="#" className="s4f_button twitter w-button">Twitter</a>
-							<a href="#" className="s4f_button facebook w-button">Facebook</a>
-							<a href="#" className="s4f_button messenger w-button">Messenger</a>
-							<a href="#" className="s4f_button instagram w-button">Instagram</a>
-						</div>
-					</div>
-				</div>
-			)
-		} else { (<div></div>) }
-	}
+// 	const show = () => {
+// 		if (txId !== undefined) {
+// 			return (
+// 				<div className="columns-6 w-row">
+// 					<div className="s4f_minted_card w-col w-col-6"><img src="images/Valentines-Example.png" loading="lazy"
+// 						sizes="100vw" srcSet="images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w" alt=""
+// 						className="image-3" /></div>
+// 					<div className="column-9 w-col w-col-6">
+// 						<a href="#" className="s4f_sol_exp">{solanaTxLink}click here to see transaction on Solana Explorer!</a>
+// 						<h1 className="s4f_h3">share on</h1>
+// 						<div className="div-block-7">
+// 							<a href="#" className="s4f_button twitter w-button">Twitter</a>
+// 							<a href="#" className="s4f_button facebook w-button">Facebook</a>
+// 							<a href="#" className="s4f_button messenger w-button">Messenger</a>
+// 							<a href="#" className="s4f_button instagram w-button">Instagram</a>
+// 						</div>
+// 					</div>
+// 				</div>
+// 			)
+// 		} else { (<div></div>) }
+// 	}
 
-	return (
-		<div>{show()}</div>
+// 	return (
+// 		<div>{show()}</div>
 
-	)
-}
+// 	)
+// }
 
 // REMOVING 
 // The mint machine produces the box showing remaining, price and the mint button
@@ -447,9 +451,9 @@ const DisplayMinted: React.FC<{ txId: string | undefined }> = (txId) => {
 
 
 
-interface CandyProps {
-	candyMachine: CandyMachineAccount | undefined,
-}
+// interface CandyProps {
+// 	candyMachine: CandyMachineAccount | undefined,
+// }
 
 interface CandyMutualProps {
 	// machine: CandyMachineAccount | undefined,
@@ -466,6 +470,9 @@ interface CandyMutualProps {
 }
 
 export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps) => {
+	// REMOVE LATER
+	mutual.setTxId("2cshdLj3QCMfnvp3ihaKCMq2o3L1Mr64jBTYP7N8Lr4JArBdSHLpFKRrLegj6pv6K2SLFjtM7fncr5LCVaopFMvN")
+
 	return (
 		<Container>
 			{!mutual.wallet.connected ? (
@@ -505,7 +512,7 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
 								onMint={() => OnMint(candyMachine, mutual, info)}
 							/>
 						)}
-						<MintFinish txId={mutual?.txId}/>
+						<MintFinish txId={mutual?.txId} connection={info.connection} />
 
 					</MintContainer>
 				</>
@@ -852,8 +859,39 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
 	)
 }
 
-const MintFinish: React.FC<{ txId: string | undefined}> = ({txId}) => {
+const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.Connection }> = ({ txId, connection }) => {
 
+	// const [image, setImage] = useState<string>()
+	// if (txId) {
+
+	// }
+	const [data, setData] = useState<(number | null | undefined)>();
+	const txInfo = (async () => {
+		if (txId) {
+			const result = await connection.getTransaction(txId)
+			setData(result?.blockTime)
+			
+			console.log(result)
+
+		}
+	})
+
+	// const tx = async () => {
+	// 	console.log('egegre')
+	// 	if (txId) {
+	// 		try {
+	// 			console.log('Getting Transaction')
+	// 			const result = await connection.getTransaction(txId)
+
+	// 			console.log(result?.meta?.postBalances)
+	// 			return result?.meta?.postBalances[0]
+	// 		} catch (e) {
+	// 			console.log('Failed trying to get transaction', e)
+	// 		}
+
+	// 	}
+
+	// }
 	return (
 		<div>
 			{
@@ -872,6 +910,8 @@ const MintFinish: React.FC<{ txId: string | undefined}> = ({txId}) => {
 									<a href="#" className="s4f_button facebook w-button">Facebook</a>
 									<a href="#" className="s4f_button messenger w-button">Messenger</a>
 									<a href="#" className="s4f_button instagram w-button">Instagram</a>
+									{async () => await txInfo()}
+									{data}
 								</div>
 							</div>
 						</div >
