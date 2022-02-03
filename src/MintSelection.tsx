@@ -675,7 +675,7 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
   // const  image = 'https://iq4gqrdbgs7kn2uferjmodv2xclcrzeejgdfh6rccreujxpyorga.arweave.net/RDhoRGE0vqbqhSRSxw66uJYo5IRJhlP6IhRJRN34dEw/?ext=png'
 
   return (
-    <div>
+    <div className="div-block-3">
       {
         txId ?
           (

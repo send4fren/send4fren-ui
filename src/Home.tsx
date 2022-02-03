@@ -135,8 +135,8 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
           </a>
           <nav role="navigation" className="nav-menu w-nav-menu">
             <a href="index.html" aria-current="page" className="s4f_nav_link w-nav-link w--current">Home</a>
-            <a href="about.html" className="s4f_nav_link w-nav-link"><span>About</span></a>
-            <a href="about.html" className="s4f_nav_link w-nav-link">Instructions</a>
+            <a href="about.html#about" className="s4f_nav_link w-nav-link"><span>About</span></a>
+            <a href="about.html#instruction" className="s4f_nav_link w-nav-link">Instructions</a>
             {/* {!wallet.connected ? (<a> <Container><ConnectButton>Connect wallet</ConnectButton></Container></a>) : (<a href="#mint-start" className="s4f_mint_button s4f_nav_version w-nav-link">mint now</a>)} */}
             <a href="#mint-start" className="s4f_mint_button s4f_nav_version w-nav-link">MINT</a>
             <div className="s4f_socials_array s4f_menu w-row">
@@ -172,7 +172,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               alt="" className="image" /></div>
             <div className="column w-col w-col-6 w-col-small-6">
               <h1 className="s4f_h1"><strong>Send sumthin 4 a fren or sumthin 4 urself, u lonely fuk.</strong></h1>
-              <h1 className="s4f_h2">Send love, the web3.0 way.</h1>
+              <h1 className="s4f_h2">Save a tree from dying and send a S4F card instead</h1>
             </div>
           </div>
           <div className="s4f_status w-row">
