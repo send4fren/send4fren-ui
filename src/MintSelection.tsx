@@ -880,7 +880,10 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 
 	const getImageContent = () => {
 		if (found) {
-			return (<img src={image} loading="lazy" sizes="100vw" alt="" className="image-3" />);
+			return (<div style={{margin: 'auto'}}>
+				<CastConfetti/>
+				<img src={image} loading="lazy" sizes="100vw" alt="" className="image-3"></img>
+				</div>);
 		} else if (isFinding) {
 			return (<div><CircularProgress/></div>)
 		}
@@ -990,7 +993,7 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 					(
 						
 						<div className="columns-6 w-row" >
-							<CastConfetti/>
+							
 							<div className="s4f_minted_card w-col w-col-6" >
 								{getImageContent()}
 							</div>

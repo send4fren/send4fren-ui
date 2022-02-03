@@ -741,6 +741,7 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
+  padding-top: 10px;
 }
 
 .s4f_minted_card {
