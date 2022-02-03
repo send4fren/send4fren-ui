@@ -1,0 +1,45 @@
+{
+    "name": "NFT #179",
+    "description": "S4F Valentines Day 2022 (naughty)",
+    "image": "179.png",
+    "edition": 179,
+    "seller_fee_basis_points": 250,
+    "collection": {
+        "name": "S4F Valentines Day",
+        "family": "naughty"
+    },
+    "symbol": "S4F",
+    "properties": {
+        "files": [
+            {
+                "uri": "179.png",
+                "type": "image/png"
+            }
+        ],
+        "category": "image",
+        "creators": [
+            {
+                "address": "5NkwxTxUaVTnwVn4mMurtrpDKqMbDTmn18ig9uCawVrG",
+                "share": 100
+            }
+        ]
+    },
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "Green.png"
+        },
+        {
+            "trait_type": "Title",
+            "value": "CupidCarriage.png"
+        },
+        {
+            "trait_type": "Character",
+            "value": "Ahegao.png"
+        },
+        {
+            "trait_type": "Text",
+            "value": "Rocket2Moon.png"
+        }
+    ]
+}

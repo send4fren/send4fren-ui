@@ -24,27 +24,7 @@ import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
 // import { DimensionedExample } from './Confetti';
-import {
-	EmailShareButton,
-	FacebookShareButton,
-	HatenaShareButton,
-	InstapaperShareButton,
-	LineShareButton,
-	LinkedinShareButton,
-	LivejournalShareButton,
-	MailruShareButton,
-	OKShareButton,
-	PinterestShareButton,
-	PocketShareButton,
-	RedditShareButton,
-	TelegramShareButton,
-	TumblrShareButton,
-	TwitterShareButton,
-	ViberShareButton,
-	VKShareButton,
-	WhatsappShareButton,
-	WorkplaceShareButton
-  } from "react-share";
+
 // import Fireworks from '@react-canvas-confetti'
 // const ConnectButton = styled(WalletDialogButton)`
 //   width: 100%;

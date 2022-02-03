@@ -101,8 +101,8 @@ const App = () => {
     title: "Valentine's Day",
     subtitle: "Spoil 'em",
     description: "1402 unique Valentine's day themed greeting cards with Nice, Naughty and Savage crypto memes to make hearts flutter, parts throbbing or blood boiling",
-    imgSrc: "images/Valentines-Example.png",
-    imgSrcSet: "images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w"
+    imgSrc: "images/NaughtExample.png",
+    imgSrcSet: "images/NaughtExample.png 500w, images/Valentines-Example.png 520w"
 
   }
 

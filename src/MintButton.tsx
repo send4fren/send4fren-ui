@@ -27,6 +27,7 @@ export const CTAButton = styled(Button)`
   font-size: 16px;
   font-weight: bold;
   border-radius: 25px;
+  
 `; // add your own styles here
 
 // export const CTAButton = styled(Button)`
