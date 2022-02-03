@@ -27,7 +27,9 @@ import { MintCountdown } from './MintCountdown';
 const theme = createTheme({
   palette: {
     type: 'dark',
+    
   },
+  
 });
 
 const getCandyMachineIds = (): anchor.web3.PublicKey[] | undefined[] => {

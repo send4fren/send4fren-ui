@@ -10,7 +10,7 @@ import * as anchor from '@project-serum/anchor';
 import { programs } from "@metaplex/js"
 
 import styled from 'styled-components';
-import { Container, Snackbar } from '@material-ui/core';
+import { Container, Link, Snackbar, CircularProgress } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
 import { PublicKey } from '@solana/web3.js';
@@ -26,7 +26,8 @@ import { string } from 'prop-types';
 import { LensTwoTone } from '@material-ui/icons';
 import { StringLiteralLike } from 'typescript';
 import { getParsedNftAccountsByOwner, isValidSolanaAddress, createConnectionConfig, } from "@nfteyez/sol-rayz";
-
+import { CastConfetti } from './Confetti';
+// import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 
 
 // Style for the connect button
@@ -467,7 +468,7 @@ interface CandyMutualProps {
 	anchorWallet: anchor.Wallet | undefined,
 	txId: string | undefined,
 	setTxId: React.Dispatch<React.SetStateAction<string | undefined>>
-	mintSuccess: boolean, 
+	mintSuccess: boolean,
 	setMintSuccess: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
@@ -721,7 +722,7 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
 	const [description, setDescription] = useState<string>(allCollections[0].description)
 	const [image, setImage] = useState<string>(allCollections[0].imgSrc)
 	const showCollections = allCollections.map((col, index) =>
-		(<option key={index}>{col.title}</option>)
+		(<option value={index} key={index}>{col.title}</option>)
 	)
 	useEffect(() => {
 		if (changed) {
@@ -750,8 +751,8 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
 								</select></form>
 						</div>
 						<div>
-							<h3 className="s4f_h3 subheading">{(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (subtitle) : ("not out yet :(")}</h3>
-							<p className="s4f_par">{(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (description) : ("But I like that ur keen. Follow us on socials!")}</p>
+							<h3 className="s4f_h3 subheading">{(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (subtitle) : ("connect ur wallet first")}</h3>
+							<p className="s4f_par">{(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (description) : ("If u r connected but still see this screen, the collection is not out yet! But I like that ur keen. Follow us on socials!")}</p>
 						</div>
 					</div>
 					<div className="column-10 w-col w-col-6 w-col-small-6"><img src={(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (image) : ("images/blankCard.svg")} loading="lazy"
@@ -870,54 +871,101 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
 const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.Connection, mutual: CandyMutualProps }> = ({ txId, connection, mutual }) => {
 
 	const [image, setImage] = useState<string>()
+	const [found, setFound] = useState(false)
+	const [isFinding, setIsFinding] = useState(false)
 	// if (txId) {
 
 	// }
 	// const [data, setData] = useState<(number | null | undefined)>();
 
-	const txInfo = useCallback((async () => {
-		
-		if (txId && mutual.mintSuccess) {
-			const result = await connection.getTransaction(txId)
-			// setData(result?.meta?.postBalances)
-			if (result?.meta?.postTokenBalances) {
-				const token = result.meta.postTokenBalances[0].mint
-				console.log(token)
+	const getImageContent = () => {
+		if (found) {
+			return (<img src={image} loading="lazy" sizes="100vw" alt="" className="image-3" />);
+		} else if (isFinding) {
+			return (<div><CircularProgress/></div>)
+		}
+		return;
+	}
 
-				if (mutual.wallet?.publicKey) {
-					const tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, mutual.wallet?.publicKey?.toString());
-					for (var nft of tokenMetadata){
+	const txInfo = (async () => {
+
+		if (txId && mutual.mintSuccess) {
+
+			// Wait for a result 
+			let result = await connection.getTransaction(txId)
+			setIsFinding(true)
+			setFound(false)
+			while (!result) {result = await connection.getTransaction(txId)}
+			console.log("Transaction found", result)
+			// Result found. look for the token
+			if(result?.meta?.postTokenBalances) {
+				let token = result.meta.postTokenBalances[0].mint
+				console.log('Token found', token)
+				// Look for NFT's inside wallet
+				if(mutual.wallet?.publicKey){
+					let tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, mutual.wallet?.publicKey?.toString());
+					for (var nft of tokenMetadata) {
+						// Locate the matching NFT of the one recently purchased
 						if (nft.mint == token) {
-							
-							const nftData = await fetch(nft.data.uri)
-							const fileData = await fetch(nftData.url).then((d) => { return d.json()})
-							setImage(fileData.image)
-							// console.log(nft.data.uri)
-							// console.log(nftData.url)
-							// console.log(nftData)
-							console.log(fileData.image)
+							const imageUrl = await fetch(nft.data.uri).then(async (link) => {
+								return await fetch(link.url).then((data) => {
+									return data.json()
+								})
+							})
+							setImage(imageUrl.image)
+							setFound(true)
 							mutual.setMintSuccess(false)
-							break;
+							console.log("Image found", imageUrl)
+							break
 						}
 					}
-					console.log(tokenMetadata);
 				}
-
-
-
-
-				// const block = await connection.getBlock(token)
-				// console.log(block)
 			}
+			
+
+			// while (mutual.mintSuccess) {
+
+			// // 	const result = await connection.getTransaction(txId)
+			// console.log("Finding image", result)
+			// // setData(result?.meta?.postBalances)
+			// if (result?.meta?.postTokenBalances) {
+			// 	console.log("Token found")
+			// 	const token = result.meta.postTokenBalances[0].mint
+			// 	console.log(token)
+
+			// 	if (mutual.wallet?.publicKey) {
+			// 		console.log("Looking for image in wallet")
+			// 		const tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, mutual.wallet?.publicKey?.toString());
+			// 		for (var nft of tokenMetadata) {
+			// 			if (nft.mint == token) {
+
+			// 				const nftData = await fetch(nft.data.uri)
+			// 				const fileData = await fetch(nftData.url).then((d) => { return d.json() })
+			// 				setImage(fileData.image)
+			// 				// console.log(nft.data.uri)
+			// 				// console.log(nftData.url)
+			// 				// console.log(nftData)
+			// 				console.log(fileData.image)
+			// 				mutual.setMintSuccess(false)
+			// 				setFound(true)
+			// 				break
+			// 			}
+			// 		}
+			// 		console.log(tokenMetadata);
+			// 	}
+			// }
+
+			// }
 
 
 
 		}
-	}), [txId, mutual.mintSuccess, image, setImage, mutual.setAlertState, mutual.anchorWallet, connection, mutual.isUserMinting])
+	})
 
 	useEffect(() => {
 		txInfo()
-	}, [txId, mutual.mintSuccess, image, setImage, mutual.setAlertState, mutual.anchorWallet, connection, mutual.isUserMinting])
+		getImageContent()
+	}, [txId, mutual.mintSuccess])
 
 	// const tx = async () => {
 	// 	console.log('egegre')
@@ -940,27 +988,34 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 			{
 				txId ?
 					(
+						
 						<div className="columns-6 w-row" >
-							<div className="s4f_minted_card w-col w-col-6"><img src={image} loading="lazy"
-								sizes="100vw"  alt=""
-								className="image-3" /></div>
+							<CastConfetti/>
+							<div className="s4f_minted_card w-col w-col-6" >
+								{getImageContent()}
+							</div>
 							<div className="column-9 w-col w-col-6">
-								<button onClick={async () => txInfo()} >View</button>
+								{/* <button onClick={async () => txInfo()} >View</button> */}
 								<a href={"https://explorer.solana.com/tx/" + txId} target="_blank" className="s4f_sol_exp">click here to see transaction on Solana Explorer!</a>
 								<h1 className="s4f_h3">share on</h1>
 								<div className="div-block-7">
 									<a href="#" className="s4f_button twitter w-button">Twitter</a>
-
+									{/* <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="s4f_button twitter w-button" data-text="Sending some love the web3.0 way" data-related="send4fren" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script> */}
+									<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" className="twitter-share-button" data-text="Sending some love the web3.0 way" data-url="http://www.google.com" data-related="send4fren" data-show-count="false">Tweet</a>
+									{/* <Link></Link> */}
+									{/* {/* <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Sending some love the web3.0 way" data-url="https://publish.twitter.com/?buttonRecommendation=send4fren&amp;buttonText=Sending%20some%20love%20the%20web3.0%20way&amp;buttonType=TweetButton&amp;buttonUrl=werwrtert&amp;widget=Button" data-related="send4fren" data-show-count="false">Tweet */}
+									<script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
 									<a href="#" className="s4f_button facebook w-button">Facebook</a>
 									<a href="#" className="s4f_button messenger w-button">Messenger</a>
 									<a href="#" className="s4f_button instagram w-button">Instagram</a>
-									
+
 									{/* {data} */}
 								</div>
 							</div>
 						</div >
+						
 					) : (<div />)
-					}
+			}
 
 
 		</div>)
