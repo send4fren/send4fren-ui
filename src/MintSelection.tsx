@@ -115,7 +115,6 @@ export interface ThemeProps {
   name: string,
   description: string
   imgSrc: string,
-  imgSrcSet: string,
   id?: anchor.web3.PublicKey
 }
 
@@ -125,7 +124,7 @@ export interface CollectionProps {
   subtitle: string;
   description: string;
   imgSrc: string;
-  imgSrcSet: string;
+
 }
 
 export interface PhantomProps {
@@ -212,7 +211,7 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
         <ConnectButton>Connect wallet</ConnectButton>
       ) : (
         <>
-          <Header candyMachine={candyMachine} reloadWhen={mutual.isUserMinting}/>
+          <Header candyMachine={candyMachine} reloadWhen={mutual.isUserMinting} />
           <MintContainer>
             {candyMachine?.state.isActive &&
               candyMachine?.state.gatekeeper &&
@@ -402,6 +401,17 @@ export const MintSection: React.FC<{ allCollections: CollectionProps[], info: Mi
     mintSuccess: mintSuccess,
     setMintSuccess: setMintSuccess
   }
+
+  
+
+  // const generateMachine = () => {
+  //   return [
+  //     CreateCandyMachine(allCollections[selectedCollection].themes[0].id, mutual, info),
+  //     CreateCandyMachine(allCollections[selectedCollection].themes[1].id, mutual, info),
+  //     CreateCandyMachine(allCollections[selectedCollection].themes[2].id, mutual, info)
+  //   ]
+  // }
+
   const machines = [
     CreateCandyMachine(allCollections[selectedCollection].themes[0].id, mutual, info),
     CreateCandyMachine(allCollections[selectedCollection].themes[1].id, mutual, info),
@@ -466,10 +476,14 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
               <p className="s4f_par">{(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (description) : ("If u r connected but still see this screen, the collection is not out yet! But I like that ur keen. Follow us on socials!")}</p>
             </div>
           </div>
-          <div className="column-10 w-col w-col-6 w-col-small-6"><img src={(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (image) : ("images/blankCard.svg")} loading="lazy"
-            sizes="(max-width: 479px) 100vw, (max-width: 767px) 32vw, (max-width: 991px) 247.796875px, 322px"
+          <div className="column-10 w-col w-col-6 w-col-small-6"><img src={(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (image) : ("images/emptyCard.svg")} loading="lazy"
+            // sizes="(max-width: 479px) 100vw, (max-width: 767px) 32vw, (max-width: 991px) 247.796875px, 322px"
             alt=""
-            className="image-2" /></div>
+            className="image-2" />
+                        <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", top: "35%" }} >
+              {(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ?(null) : (<h1 className="s4f_h1">nuffing :(</h1>) } 
+            </div>
+            </div>
         </div>
 
       </div>
@@ -558,8 +572,8 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
       <h2 className="s4f_h3">mint it, then send it!</h2>
       <div className="s4f_destination_mint_default">
         {DisplayCandyMachine(candyMachine, mutual, info)}
-        </div>
-      
+      </div>
+
 
       <h2 className="s4f_h3">for who?</h2>
       <div data-current="Tab 2" data-easing="ease" data-duration-in="300" data-duration-out="100" className="s4f_tabs s4f_tabs_mint w-tabs">
@@ -592,6 +606,7 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
   const [image, setImage] = useState<string>()
   const [found, setFound] = useState(false)
   const [isFinding, setIsFinding] = useState(false)
+  const [loadText, setLoadText] = useState("finding photo on solana...")
   // if (txId) {
   // const getFileUrl = async () => {
   //   if (image) {
@@ -615,17 +630,22 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
         {/* </a> */}
       </div>);
     } else if (isFinding) {
-      return (<div>
-        <h3 className="s4f_h3">pls wait! finding photo on solana...</h3>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div><CircularProgress /></div>
-        </div>
-      </div>)
+      return (
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <img src='images/emptyCard.svg' style={{ width: "90%" }} />
+            <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", top: "35%" }} >
+              <h3 className="s4f_h3">pls wait! <br />{loadText}</h3>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", bottom: "40%" }} >
+              <CircularProgress /></div>
+          </div>
+        </div>)
     }
     return;
   }
 
-  const wait = (ms:number) => new Promise(res => setTimeout(res, ms));
+  const wait = (ms: number) => new Promise(res => setTimeout(res, ms));
 
   const txInfo = (async () => {
 
@@ -635,14 +655,17 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
       let result = await connection.getTransaction(txId)
       setIsFinding(true)
       setFound(false)
-      while (!result) { 
-        await wait(1000) 
-        result = await connection.getTransaction(txId) }
+      while (!result) {
+        await wait(1000)
+        result = await connection.getTransaction(txId)
+      }
       console.log("Transaction found", result)
+      setLoadText("found ur transaction baby")
       // Result found. look for the token
       if (result?.meta?.postTokenBalances) {
         let token = result.meta.postTokenBalances[0].mint
         console.log('Token found', token)
+        setLoadText("found the photo! damn it looks good")
         // Look for NFT's inside wallet
         if (mutual.wallet?.publicKey) {
           let tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, mutual.wallet?.publicKey?.toString());
@@ -658,6 +681,7 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
               setFound(true)
               mutual.setMintSuccess(false)
               console.log("Image found", image)
+              setLoadText("finding photo on solana...")
               break
             }
           }
@@ -688,15 +712,6 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
                 <a href={"https://explorer.solana.com/tx/" + txId} target="_blank" className="s4f_sol_exp">click here to see transaction on Solana Explorer!</a>
                 <h1 className="s4f_h3">share on</h1>
                 <div className="div-block-7">
-                  {/* <a href="#" className="s4f_button twitter w-button">Twitter</a>
-                  {/* <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="s4f_button twitter w-button" data-text="Sending some love the web3.0 way" data-related="send4fren" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script> */}
-                  {/* <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" className="twitter-share-button" data-text="Sending some love the web3.0 way" data-url="http://www.google.com" data-related="send4fren" data-show-count="false">Tweet</a> */}
-                  {/* <Link></Link> */}
-                  {/* {/* <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Sending some love the web3.0 way" data-url="https://publish.twitter.com/?buttonRecommendation=send4fren&amp;buttonText=Sending%20some%20love%20the%20web3.0%20way&amp;buttonType=TweetButton&amp;buttonUrl=werwrtert&amp;widget=Button" data-related="send4fren" data-show-count="false">Tweet */}
-                  {/* <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
-                  <a href="#" className="s4f_button facebook w-button">Facebook</a>
-                  <a href="#" className="s4f_button messenger w-button">Messenger</a>
-                  <a href="#" className="s4f_button instagram w-button">Instagram</a> */}
                   <FacebookShareButton style={facebookStyle}
                     quote={quote}
                     hashtag='#send4fren'

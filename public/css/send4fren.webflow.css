@@ -78,6 +78,7 @@
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
+
 }
 
 .column {
@@ -179,7 +180,13 @@
   background-position: 0px 0px;
   background-size: cover;
   background-repeat: repeat;
+  animation: moveIt 10s linear infinite;
   
+}
+
+@keyframes moveIt {
+  from {background-position: bottom left;}
+  to {background-position: top right;}
 }
 
 .dropdown {
@@ -839,7 +846,7 @@
 }
 
 .image-2 {
-  width: 70%;
+  width: 90%;
   border-radius: 25px;
   box-shadow: 3px 3px 4px 0 #3a3a3a;
 }

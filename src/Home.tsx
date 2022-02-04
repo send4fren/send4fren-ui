@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import * as anchor from '@project-serum/anchor';
 
-import { CollectionProps, MintProps, PhantomProps, MintSection, ConnectButton} from './MintSelection';
+import { CollectionProps, MintProps, PhantomProps, MintSection, ConnectButton } from './MintSelection';
 import styled from 'styled-components';
 import { Container, Select, Snackbar, FormControl, InputLabel, MenuItem } from '@material-ui/core';
 
@@ -117,13 +117,13 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
     wallet: wallet,
     anchorWallet: anchorWallet
   }
-  
+
   const selectCollections = collections.map(col =>
     (<option value="valentines">{col.title}</option>)
   )
 
-  
-   
+
+
   return (
     <div>
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
@@ -179,12 +179,12 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
             <div className="s4f_banner_column w-col w-col-4">
               <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
             </div>
-            
+
             <div className="s4f_banner_column w-col w-col-4">
-            {/* <a href="#" className="s4f_button facebook w-button"></a> */}
+              {/* <a href="#" className="s4f_button facebook w-button"></a> */}
               {!wallet.connected ? (
-              <div style={{width: "100%", alignItems: "center"}}>
-              <Container><ConnectButton>Connect wallet</ConnectButton></Container></div>) : (
+                <div style={{ width: "100%", alignItems: "center" }}>
+                  <Container><ConnectButton>Connect wallet</ConnectButton></Container></div>) : (
                 <MintCountdown date={toDate(
                   candyMachine?.state.goLiveDate
                     ? candyMachine?.state.goLiveDate
@@ -193,30 +193,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
                       : undefined,
                 )}
                   style={{ justifyContent: 'flex-end' }}
-                  status={
-                    'OUT NOW'
-                    // !candyMachine?.state?.isActive || candyMachine?.state?.isSoldOut
-                    //   ? 'COMPLETED'
-                    //   : candyMachine?.state.isPresale
-                    //     ? 'PRESALE'
-                    //     : 'LIVE'
-                  } />)}
- 
-                  {/* <MintCountdown date={toDate(
-                  candyMachine?.state.goLiveDate
-                    ? candyMachine?.state.goLiveDate
-                    : candyMachine?.state.isPresale
-                      ? new anchor.BN(new Date().getTime() / 1000)
-                      : undefined,
-                )}
-                  style={{ justifyContent: 'flex-end' }}
-                  status={
-                    !candyMachine?.state?.isActive || candyMachine?.state?.isSoldOut
-                      ? 'COMPLETED'
-                      : candyMachine?.state.isPresale
-                        ? 'PRESALE'
-                        : 'LIVE'
-                  } /> */}
+                  status={'OUT NOW'} />)}
             </div>
             <div className="s4f_banner_column w-col w-col-4">
               <a href="#mint-start" className="s4f_hero_button w-button">start sending</a>
@@ -245,10 +222,16 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
           </div>
         </div>
       </div>
-
-      {/* {showMintSection()} */}
-      <MintSection allCollections={collections} info={props} phantom={phantom}></MintSection>
-
+      <div className="w-container">
+        <h3 className="s4f_h3">
+          More than just your typical NFT when you buy S4F</h3>
+        <div className="s4f_par" >
+          Our mission is to be a sustainable project and onboard new-comers to NFT in an affordable yet fun way.
+          <br /><br />Each card has been custom-made to suit the year's feel and emotion within the crypto community.
+        </div>
+        <div style={{ height: "20px" }} />
+        <MintSection allCollections={collections} info={props} phantom={phantom}></MintSection>
+      </div>
     </div>
   )
 };
