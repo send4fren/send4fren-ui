@@ -1,3 +1,4 @@
+import { RestoreOutlined } from '@material-ui/icons';
 import * as anchor from '@project-serum/anchor';
 
 import { MintLayout, TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
@@ -246,7 +247,7 @@ export const getCandyMachineCreator = async (
 export const mintOneToken = async (
   candyMachine: CandyMachineAccount,
   payer: anchor.web3.PublicKey,
-  // dest: anchor.web3.PublicKey | undefined
+  dest?: anchor.web3.PublicKey
 ): Promise<(string | undefined)[]> => {
   const mint = anchor.web3.Keypair.generate();
 
@@ -261,6 +262,7 @@ export const mintOneToken = async (
   const candyMachineAddress = candyMachine.id;
   const remainingAccounts = [];
   const signers: anchor.web3.Keypair[] = [mint];
+  const dest_signers: anchor.web3.Keypair[] = [];
   const cleanupInstructions = [];
   const instructions = [
     anchor.web3.SystemProgram.createAccount({
@@ -350,6 +352,7 @@ export const mintOneToken = async (
         isSigner: true,
       });
       signers.push(whitelistBurnAuthority);
+      dest_signers.push(whitelistBurnAuthority);
       const exists =
         await candyMachine.program.provider.connection.getAccountInfo(
           whitelistToken,
@@ -381,6 +384,7 @@ export const mintOneToken = async (
     const transferAuthority = anchor.web3.Keypair.generate();
 
     signers.push(transferAuthority);
+
     remainingAccounts.push({
       pubkey: userPayingAccountAddress,
       isWritable: true,
@@ -444,54 +448,67 @@ export const mintOneToken = async (
   );
 
   // Instructions for sending to dest address
-  // dest = new PublicKey('5NkwxTxUaVTnwVn4mMurtrpDKqMbDTmn18ig9uCawVrG')
-  // if (dest) {
-  //   let dest_ata = await Token.getAssociatedTokenAddress(
-  //     ASSOCIATED_TOKEN_PROGRAM_ID,
-  //     TOKEN_PROGRAM_ID,
-  //     mint.publicKey,
-  //     dest
-  //   )
+  const send_instructions = []
+  if (dest) {
+    let dest_ata = await Token.getAssociatedTokenAddress(
+      ASSOCIATED_TOKEN_PROGRAM_ID,
+      TOKEN_PROGRAM_ID,
+      mint.publicKey,
+      dest
+    )
 
-  //   instructions.push(
-  //     Token.createAssociatedTokenAccountInstruction(
-  //       ASSOCIATED_TOKEN_PROGRAM_ID,
-  //       TOKEN_PROGRAM_ID,
-  //       mint.publicKey,
-  //       dest_ata,
-  //       dest,
-  //       payer
-  //     )
-  //   )
-
-  //   instructions.push(
-  //     Token.createTransferCheckedInstruction(
-  //       TOKEN_PROGRAM_ID,
-  //       userTokenAccountAddress, // LIKELY PROBLEM LINE
-  //       mint.publicKey,
-  //       dest_ata,
-  //       payer,
-  //       [],
-  //       1e8,
-  //       8
-  //     )
-  //   )
-  // }
+    send_instructions.push(
+      Token.createAssociatedTokenAccountInstruction(
+        ASSOCIATED_TOKEN_PROGRAM_ID,
+        TOKEN_PROGRAM_ID,
+        mint.publicKey,
+        dest_ata,
+        dest,
+        payer
+      )
+    )
+    send_instructions.push(
+      Token.createTransferCheckedInstruction(
+        TOKEN_PROGRAM_ID,
+        userTokenAccountAddress,
+        mint.publicKey,
+        dest_ata,
+        payer,
+        [],
+        1,
+        0
+      )
+    )
+  }
 
   try {
-    return (
+    let res: (string | undefined)[] = [];
+    
+    res = res.concat((
       await sendTransactions(
         candyMachine.program.provider.connection,
         candyMachine.program.provider.wallet,
         [instructions, cleanupInstructions],
         [signers, []],
       )
-    ).txs.map(t => t.txid);
+    ).txs.map(t => t.txid));
+
+    if (dest) {
+      res = res.concat((
+        await sendTransactions(
+          candyMachine.program.provider.connection,
+          candyMachine.program.provider.wallet,
+          [send_instructions],
+          [dest_signers, []],
+        )
+      ).txs.map(t => t.txid));
+    }
+    
+    return res;
   } catch (e) {
     console.log(e);
+    return [];
   }
-
-  return [];
 };
 
 export const shortenAddress = (address: string, chars = 4): string => {
