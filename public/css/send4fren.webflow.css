@@ -1266,20 +1266,52 @@
 
 .s4f_par.s4f_roadmap_right {
   display: block;
+  margin-left: -65px;
   border-bottom: 1px solid #fff;
   text-align: left;
+  padding-right: 10px;
 }
 
 .s4f_par.s4f_roadmap_left {
+  margin-right: -65px;
   -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
   border-bottom: 1px solid #fff;
   text-align: right;
+  padding-left: 10px;
 }
 
 
+.timeline {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.timeline_bar {
+  display: block;
+  width: 10px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.timeline_axis {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
 .image-16 {
   height: 10vh;
   -webkit-transform: translate(0px, 0px);
