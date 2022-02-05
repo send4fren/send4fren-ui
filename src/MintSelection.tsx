@@ -200,11 +200,13 @@ interface CandyMutualProps {
   anchorWallet: anchor.Wallet | undefined,
   txId: string | undefined,
   setTxId: React.Dispatch<React.SetStateAction<string | undefined>>
+  recipTxId: string | undefined,
+  setRecipTxId: React.Dispatch<React.SetStateAction<string | undefined>>
   mintSuccess: boolean,
   setMintSuccess: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps) => {
+export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps, destination: string | undefined) => {
   // REMOVE LATER
   // mutual.setTxId("2cshdLj3QCMfnvp3ihaKCMq2o3L1Mr64jBTYP7N8Lr4JArBdSHLpFKRrLegj6pv6K2SLFjtM7fncr5LCVaopFMvN")
 
@@ -237,17 +239,17 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
                 <MintButton
                   candyMachine={candyMachine}
                   isMinting={mutual.isUserMinting}
-                  onMint={() => OnMint(candyMachine, mutual, info)}
+                  onMint={() => OnMint(candyMachine, mutual, info, destination)}
                 />
               </GatewayProvider>
             ) : (
               <MintButton
                 candyMachine={candyMachine}
                 isMinting={mutual.isUserMinting}
-                onMint={() => OnMint(candyMachine, mutual, info)}
+                onMint={() => OnMint(candyMachine, mutual, info, destination)}
               />
             )}
-            <MintFinish txId={mutual?.txId} connection={info.connection} mutual={mutual} />
+            <MintFinish recipTxId={mutual?.recipTxId} txId={mutual?.txId} connection={info.connection} mutual={mutual} />
 
           </MintContainer>
         </>
@@ -269,16 +271,19 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
 };
 
 // What happens after the mint button has been pressed
-const OnMint = async (candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps) => {
+const OnMint = async (candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps, destination: string | undefined) => {
   try {
     mutual.setIsUserMinting(true);
     document.getElementById('#identity')?.click();
     if (mutual.wallet.connected && candyMachine?.program && mutual.wallet.publicKey) {
+      if (destination) { }
+      // const destPubKey = new PublicKey(destination)
       const mintTxIds = (
-        await mintOneToken(candyMachine, mutual.wallet.publicKey)
+        await mintOneToken(candyMachine, mutual.wallet.publicKey, (destination ? (new PublicKey(destination)) : (undefined)))
       );
       const mintTxId = mintTxIds[mintTxIds.length - 1];
       mutual.setTxId(mintTxId);
+      mutual.setRecipTxId(mintTxIds[0]);
 
       let status: any = { err: true };
       if (mintTxId) {
@@ -382,6 +387,7 @@ export const MintSection: React.FC<{ allCollections: CollectionProps[], info: Mi
   const [selectedCollection, setSelectedCollection] = useState<number>(0);
   const [selectedCandyMachine, setSelectedCandyMachine] = useState<CandyMachineAccount | undefined>()
   const [txId, setTxId] = useState<string>();
+  const [recipTxId, setRecipTxId] = useState<string>();
   const [theme, setTheme] = useState<number>();
   const [mintSuccess, setMintSuccess] = useState(false)
 
@@ -402,6 +408,8 @@ export const MintSection: React.FC<{ allCollections: CollectionProps[], info: Mi
     anchorWallet: phantom.anchorWallet,
     txId: txId,
     setTxId: setTxId,
+    recipTxId: txId,
+    setRecipTxId: setTxId,
     mintSuccess: mintSuccess,
     setMintSuccess: setMintSuccess
   }
@@ -530,7 +538,7 @@ export const MintTheme: React.FC<{ allCandyMachines: (CandyMachineAccount | unde
                     {showTheme(0)}
                   </a>
                   <a data-w-tab="Tab 2" className="s4f_theme_tab w-inline-block w-tab-link" >
-                   {showTheme(1)}
+                    {showTheme(1)}
                   </a>
                   <a data-w-tab="Tab 3" className="s4f_theme_tab w-inline-block w-tab-link">
                     {showTheme(2)}
@@ -579,7 +587,7 @@ export const MintTheme: React.FC<{ allCandyMachines: (CandyMachineAccount | unde
 export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undefined, mutual: CandyMutualProps, info: MintProps }> = (
   { candyMachine, mutual, info }
 ) => {
-
+  const [recipientAddress, setRecipientAddress] = useState<string>()
   // const related = ['send4fren']
   return (
     <div className="div-block-5" id="process-mint">
@@ -596,30 +604,26 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
         <div className="tabs-content w-tab-content">
           <div data-w-tab="Tab 1" className="s4f_destination_mint w-tab-pane">
             <div className="columns-7 w-row">
-              {/* <form action="#">
-                <label for="fname">First name:</label>
-                <input type="text" id="fname" name="fname"/><br><br>
-                  <label for="lname">Last name:</label>
-                  <input type="text" id="lname" name="lname"/><br><br>
-                    <input type="submit" value="
-                    Submit"/>
-                    </form> */}
-              <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center" }}>
-                <FormControl style={{width: "90%", textAlign: "center", background: "white", borderRadius: "25px", padding: "10px"}}>
-                  <Input style={{color: "black", padding: "10px"}} placeholder="enter your frens address" />
+            <h2 className="s4f_h3">enter your frens address</h2>
+              <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center" ,paddingBottom: "10px"}}>
+                <FormControl style={{ width: "90%", textAlign: "center", background: "white", borderRadius: "25px", padding: "10px" }}>
+                  <Input style={{ color: "black", padding: "10px" }} placeholder="solana address" onChange={(
+                    ev: React.ChangeEvent<HTMLInputElement>,
+                  ): void => {
+                    setRecipientAddress(ev.target.value)
+                    // console.log(address)
+                  }} />
                   {/* <MyFormHelperText /> */}
                 </FormControl>
                 {/* <TextField id="outlined-basic" label="your frens wallet address" variant="outlined" /> */}
                 {/* <TextField id="filled-basic" label="your frens wallet address" style={{color: "white"}} inputProps={{disableUnderline: true}} /> */}
                 {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
               </Box>
-
-              <div className="s4f_par">cannot send 4 fren yet :(</div>
-              {DisplayCandyMachine(candyMachine, mutual, info)}
+              {DisplayCandyMachine(candyMachine, mutual, info, recipientAddress)}
             </div>
           </div>
           <div data-w-tab="Tab 2" className="s4f_destination_mint w-tab-pane w--tab-active">
-            {DisplayCandyMachine(candyMachine, mutual, info)}
+            {DisplayCandyMachine(candyMachine, mutual, info, recipientAddress)}
           </div>
         </div>
       </div>
@@ -627,7 +631,7 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
   )
 }
 
-const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.Connection, mutual: CandyMutualProps }> = ({ txId, connection, mutual }) => {
+const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undefined, connection: anchor.web3.Connection, mutual: CandyMutualProps }> = ({ recipTxId, txId, connection, mutual }) => {
 
   const [image, setImage] = useState<string>()
   const [found, setFound] = useState(false)
@@ -676,15 +680,15 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
 
   const txInfo = (async () => {
 
-    if (txId && mutual.mintSuccess) {
+    if (recipTxId && mutual.mintSuccess) {
 
       // Wait for a result 
-      let result = await connection.getTransaction(txId)
+      let result = await connection.getTransaction(recipTxId)
       setIsFinding(true)
       setFound(false)
       while (!result) {
         await wait(1000)
-        result = await connection.getTransaction(txId)
+        result = await connection.getTransaction(recipTxId)
       }
       console.log("Transaction found", result)
       setLoadText("found ur transaction baby")
@@ -695,23 +699,38 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
         setLoadText("found the photo! damn it looks good")
         // Look for NFT's inside wallet
         if (mutual.wallet?.publicKey) {
-          let tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, mutual.wallet?.publicKey?.toString());
-          for (var nft of tokenMetadata) {
-            // Locate the matching NFT of the one recently purchased
-            if (nft.mint == token) {
-              const image = await fetch(nft.data.uri).then(async (link) => {
-                return await fetch(link.url).then((data) => {
-                  return data.json()
-                })
-              })
-              setImage(image.image)
-              setFound(true)
-              mutual.setMintSuccess(false)
-              console.log("Image found", image)
-              setLoadText("finding photo on solana...")
-              break
-            }
-          }
+          // let tokenMetadata = await programs.metadata.Metadata.findDataByOwner(connection, mutual.wallet?.publicKey?.toString());
+
+          let metadataPDA = await programs.metadata.Metadata.getPDA(new PublicKey(token));
+          const tokenMetadata = await programs.metadata.Metadata.load(connection, metadataPDA);
+          console.log("token Metadata", tokenMetadata)
+
+          const image = await fetch(tokenMetadata.data.data.uri).then(async (link) => {
+            return await fetch(link.url).then((data) => {
+              return data.json()
+            })
+          })
+          setImage(image.image)
+          setFound(true)
+          mutual.setMintSuccess(false)
+          console.log("Image found", image)
+          setLoadText("finding photo on solana...")
+          // for (var nft of tokenMetadata) {
+          //   // Locate the matching NFT of the one recently purchased
+          //   if (nft.mint == token) {
+          //     const image = await fetch(nft.data.uri).then(async (link) => {
+          //       return await fetch(link.url).then((data) => {
+          //         return data.json()
+          //       })
+          //     })
+          //     setImage(image.image)
+          //     setFound(true)
+          //     mutual.setMintSuccess(false)
+          //     console.log("Image found", image)
+          //     setLoadText("finding photo on solana...")
+          //     break
+          //   }
+          // }
         }
       }
     }

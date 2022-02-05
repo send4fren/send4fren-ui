@@ -123,17 +123,17 @@ const App = () => {
     id: savageCandyMachineId
   }
 
-  const bdayCollection: CollectionProps = {
-    themes: [a, b, c],
-    title: "Birthday Day",
-    subtitle: "Fuck them up",
-    description: "1000 ways to make it go with a bang",
-    imgSrc: "images/emptyCard.svg",
+  // const bdayCollection: CollectionProps = {
+  //   themes: [a, b, c],
+  //   title: "Birthday Day",
+  //   subtitle: "Fuck them up",
+  //   description: "1000 ways to make it go with a bang",
+  //   imgSrc: "images/emptyCard.svg",
     
 
-  }
+  // }
 
-  const collections = [vdayCollection, bdayCollection]
+  const collections = [vdayCollection]
 
   const mintInfo: MintProps = {
     connection: connection,
