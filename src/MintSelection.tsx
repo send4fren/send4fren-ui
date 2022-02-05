@@ -524,7 +524,7 @@ export const MintTheme: React.FC<{ allCandyMachines: (CandyMachineAccount | unde
       <p className="s4f_par s4f_theme_description">{allThemes[index].description}</p> </div>)
   }
   return (
-    <div>
+    <div style={{marginTop: "50px"}}>
 
       {true ?
         (< div className="s4f_mint wf-section" >

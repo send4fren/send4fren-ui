@@ -510,6 +510,7 @@
 
 .s4f_mint {
   border-radius: 25px;
+
 }
 
 .collection-item {
@@ -1249,6 +1250,55 @@
   -ms-flex-align: center;
   align-items: center;
 }
+
+
+.s4f_roadmap_columns {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.s4f_par.s4f_roadmap_right {
+  display: block;
+  border-bottom: 1px solid #fff;
+  text-align: left;
+}
+
+.s4f_par.s4f_roadmap_left {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  border-bottom: 1px solid #fff;
+  text-align: right;
+}
+
+
+.image-16 {
+  height: 10vh;
+  -webkit-transform: translate(0px, 0px);
+  -ms-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+}
+
+.image-16.odd {
+  -webkit-transform: rotate(-29deg);
+  -ms-transform: rotate(-29deg);
+  transform: rotate(-29deg);
+}
+
+.image-16.even {
+  -webkit-transform: rotate(-160deg);
+  -ms-transform: rotate(-160deg);
+  transform: rotate(-160deg);
+}
+
 
 .s4f_about_column {
   width: 100%;
@@ -2169,4 +2219,5 @@
     -ms-flex-direction: column;
     flex-direction: column;
   }
+  
 }
