@@ -476,16 +476,13 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
                 </select></form>
             </div>
             <div>
-              <h3 className="s4f_h3 subheading">{(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (subtitle) : ("connect ur wallet first")}</h3>
-              <p className="s4f_par">{(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (description) : ("If u r connected but still see this screen, the collection is not out yet! But I like that ur keen. Follow us on socials!")}</p>
+              <h3 className="s4f_h3 subheading">{subtitle}</h3>
+              <p className="s4f_par">{description}</p>
             </div>
           </div>
-          <div className="column-10 w-col w-col-6 w-col-small-6"><img src={(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (image) : ("images/emptyCard.svg")} loading="lazy"
-            // sizes="(max-width: 479px) 100vw, (max-width: 767px) 32vw, (max-width: 991px) 247.796875px, 322px"
-            alt=""
-            className="image-2" />
+          <div className="column-10 w-col w-col-6 w-col-small-6"><img src={image} loading="lazy" alt="" className="image-2" />
+            {/* sizes="(max-width: 479px) 100vw, (max-width: 767px) 32vw, (max-width: 991px) 247.796875px, 322px" */}
             <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", top: "35%" }} >
-              {(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (null) : (<h1 className="s4f_h1">nuffing :(</h1>)}
             </div>
           </div>
         </div>
@@ -530,13 +527,13 @@ export const MintTheme: React.FC<{ allCandyMachines: (CandyMachineAccount | unde
                 className="s4f_tabs w-tabs">
                 <div className="s4f_theme_options w-tab-menu">
                   <a data-w-tab="Tab 1" className="s4f_theme_tab w-inline-block w-tab-link w--current">
-                    {allCandyMachines[idxRef]?.state?.isActive ? (showTheme(0)) : (noTheme)}
+                    {showTheme(0)}
                   </a>
                   <a data-w-tab="Tab 2" className="s4f_theme_tab w-inline-block w-tab-link" >
-                    {allCandyMachines[idxRef]?.state?.isActive ? (showTheme(1)) : (noTheme)}
+                   {showTheme(1)}
                   </a>
                   <a data-w-tab="Tab 3" className="s4f_theme_tab w-inline-block w-tab-link">
-                    {allCandyMachines[idxRef]?.state?.isActive ? (showTheme(2)) : (noTheme)}
+                    {showTheme(2)}
                   </a>
                 </div>
                 <div className="w-tab-content">
@@ -586,12 +583,6 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
   // const related = ['send4fren']
   return (
     <div className="div-block-5" id="process-mint">
-      <h2 className="s4f_h3">mint it, then send it!</h2>
-      <div className="s4f_destination_mint_default">
-        {DisplayCandyMachine(candyMachine, mutual, info)}
-      </div>
-
-
       <h2 className="s4f_h3">for who?</h2>
       <div data-current="Tab 2" data-easing="ease" data-duration-in="300" data-duration-out="100" className="s4f_tabs s4f_tabs_mint w-tabs">
         <div className="s4f_destination w-tab-menu">
