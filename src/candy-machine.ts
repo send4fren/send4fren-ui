@@ -262,7 +262,6 @@ export const mintOneToken = async (
   const candyMachineAddress = candyMachine.id;
   const remainingAccounts = [];
   const signers: anchor.web3.Keypair[] = [mint];
-  const dest_signers: anchor.web3.Keypair[] = [];
   const cleanupInstructions = [];
   const instructions = [
     anchor.web3.SystemProgram.createAccount({
@@ -352,7 +351,6 @@ export const mintOneToken = async (
         isSigner: true,
       });
       signers.push(whitelistBurnAuthority);
-      dest_signers.push(whitelistBurnAuthority);
       const exists =
         await candyMachine.program.provider.connection.getAccountInfo(
           whitelistToken,
@@ -448,7 +446,6 @@ export const mintOneToken = async (
   );
 
   // Instructions for sending to dest address
-  const send_instructions = []
   if (dest) {
     let dest_ata = await Token.getAssociatedTokenAddress(
       ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -457,7 +454,7 @@ export const mintOneToken = async (
       dest
     )
 
-    send_instructions.push(
+    instructions.push(
       Token.createAssociatedTokenAccountInstruction(
         ASSOCIATED_TOKEN_PROGRAM_ID,
         TOKEN_PROGRAM_ID,
@@ -467,7 +464,7 @@ export const mintOneToken = async (
         payer
       )
     )
-    send_instructions.push(
+    instructions.push(
       Token.createTransferCheckedInstruction(
         TOKEN_PROGRAM_ID,
         userTokenAccountAddress,
@@ -481,28 +478,15 @@ export const mintOneToken = async (
     )
   }
 
-  try {
-    let res: (string | undefined)[] = [];
-    
-    res = res.concat((
+  try {    
+    const res = (
       await sendTransactions(
         candyMachine.program.provider.connection,
         candyMachine.program.provider.wallet,
         [instructions, cleanupInstructions],
         [signers, []],
       )
-    ).txs.map(t => t.txid));
-
-    if (dest) {
-      res = res.concat((
-        await sendTransactions(
-          candyMachine.program.provider.connection,
-          candyMachine.program.provider.wallet,
-          [send_instructions],
-          [dest_signers, []],
-        )
-      ).txs.map(t => t.txid));
-    }
+    ).txs.map(t => t.txid);
     
     return res;
   } catch (e) {
