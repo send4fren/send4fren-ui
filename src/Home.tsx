@@ -23,6 +23,7 @@ import { AlertState } from './utils';
 import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
+
 // import { DimensionedExample } from './Confetti';
 
 // import Fireworks from '@react-canvas-confetti'

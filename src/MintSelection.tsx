@@ -22,11 +22,14 @@ import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
 import { toDate, formatNumber } from './utils';
 import Typography from '@material-ui/core/Typography';
+import { TextField } from '@material-ui/core';
 import { string } from 'prop-types';
 import { LensTwoTone } from '@material-ui/icons';
 import { StringLiteralLike } from 'typescript';
 import { getParsedNftAccountsByOwner, isValidSolanaAddress, createConnectionConfig, } from "@nfteyez/sol-rayz";
 import { CastConfetti } from './Confetti';
+import { FormControl, Input, InputAdornment, FormHelperText } from '@material-ui/core';
+
 // import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import {
   EmailShareButton,
@@ -402,7 +405,7 @@ export const MintSection: React.FC<{ allCollections: CollectionProps[], info: Mi
     setMintSuccess: setMintSuccess
   }
 
-  
+
 
   // const generateMachine = () => {
   //   return [
@@ -480,10 +483,10 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
             // sizes="(max-width: 479px) 100vw, (max-width: 767px) 32vw, (max-width: 991px) 247.796875px, 322px"
             alt=""
             className="image-2" />
-                        <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", top: "35%" }} >
-              {(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ?(null) : (<h1 className="s4f_h1">nuffing :(</h1>) } 
+            <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", top: "35%" }} >
+              {(candyMachine?.state?.isActive || candyMachine?.state?.isPresale) ? (null) : (<h1 className="s4f_h1">nuffing :(</h1>)}
             </div>
-            </div>
+          </div>
         </div>
 
       </div>
@@ -555,6 +558,19 @@ export const MintTheme: React.FC<{ allCandyMachines: (CandyMachineAccount | unde
             </div>
           </div>
         </div>) : (<div />)}
+      {/* <TwitterShareButton style={twitterStyle} url="https://tmqnfr7jra6kjkwkbw2b7sh7t4s6srdvhk3paibcn7vq37yh4jxa.arweave.net/myDSx-mIPKSqyg20H8j_nyXpRHU6tvAgIm_rDf8H4m4/?ext=png" title="yuh"
+                    via='send4fren'
+                    related={['send4fren']}
+                    hashtags={['send4fren', 'nft', 'nftart', 'crypto', 'weeb', 'celebration', 'greetingcards', 'hallmark', 'solana', 'investing']}>
+                    <TwitterIcon size={40} round={true} />
+      </TwitterShareButton>
+      <meta name="twitter:image" content="https://tmqnfr7jra6kjkwkbw2b7sh7t4s6srdvhk3paibcn7vq37yh4jxa.arweave.net/myDSx-mIPKSqyg20H8j_nyXpRHU6tvAgIm_rDf8H4m4/?ext=png"></meta>
+
+      <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet
+      
+      </a>
+      <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script> */}
+      <meta name="twitter:image" content="https://tmqnfr7jra6kjkwkbw2b7sh7t4s6srdvhk3paibcn7vq37yh4jxa.arweave.net/myDSx-mIPKSqyg20H8j_nyXpRHU6tvAgIm_rDf8H4m4/?ext=png"></meta>
 
     </div>)
   // }
@@ -588,6 +604,31 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
         <div className="tabs-content w-tab-content">
           <div data-w-tab="Tab 1" className="s4f_destination_mint w-tab-pane">
             <div className="columns-7 w-row">
+              <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center" }}>
+                <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                  <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                  <Input
+                    id="standard-adornment-password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                {/* <TextField id="outlined-basic" label="your frens wallet address" variant="outlined" /> */}
+                {/* <TextField id="filled-basic" label="your frens wallet address" style={{color: "white"}} inputProps={{disableUnderline: true}} /> */}
+                {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
+              </Box>
+
               <div className="s4f_par">cannot send 4 fren yet :(</div>
               {DisplayCandyMachine(candyMachine, mutual, info)}
             </div>
@@ -639,6 +680,7 @@ const MintFinish: React.FC<{ txId: string | undefined, connection: anchor.web3.C
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", bottom: "40%" }} >
               <CircularProgress /></div>
+
           </div>
         </div>)
     }

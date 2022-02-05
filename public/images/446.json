@@ -1,0 +1,45 @@
+{
+    "name": "NFT #446",
+    "description": "S4F Valentines Day 2022 (nice)",
+    "image": "446.png",
+    "edition": 446,
+    "seller_fee_basis_points": 250,
+    "collection": {
+        "name": "S4F Valentines Day",
+        "family": "nice"
+    },
+    "symbol": "S4F",
+    "properties": {
+        "files": [
+            {
+                "uri": "446.png",
+                "type": "image/png"
+            }
+        ],
+        "category": "image",
+        "creators": [
+            {
+                "address": "5NkwxTxUaVTnwVn4mMurtrpDKqMbDTmn18ig9uCawVrG",
+                "share": 100
+            }
+        ]
+    },
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "Green.png"
+        },
+        {
+            "trait_type": "Title",
+            "value": "CupidCarriage.png"
+        },
+        {
+            "trait_type": "Character",
+            "value": "CupidShiba.png"
+        },
+        {
+            "trait_type": "Text",
+            "value": "SolMate.png"
+        }
+    ]
+}

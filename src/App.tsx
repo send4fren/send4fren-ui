@@ -90,7 +90,7 @@ const App = () => {
   const savage: ThemeProps = {
     name: 'Savage',
     description: "Roast them because you care about them",
-    imgSrc: "images/SAVAGE_AnimeWaifu.png",
+    imgSrc: "images/SAVAGE_Monkey.png",
     id: savageCandyMachineId
   }
   const vdayCollection: CollectionProps = {
@@ -98,7 +98,7 @@ const App = () => {
     title: "Valentine's Day",
     subtitle: "Spoil 'em",
     description: "1402 unique Valentine's day themed greeting cards with Nice, Naughty and Savage crypto memes to make hearts flutter, parts throbbing or blood boiling",
-    imgSrc: "images/NaughtExample.png",
+    imgSrc: "images/446.png",
     
 
   }

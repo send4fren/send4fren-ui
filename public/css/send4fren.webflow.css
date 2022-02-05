@@ -180,7 +180,7 @@
   background-position: 0px 0px;
   background-size: cover;
   background-repeat: repeat;
-  animation: moveIt 10s linear infinite;
+  /* animation: moveIt 10s linear infinite; */
   
 }
 
@@ -1131,7 +1131,8 @@
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 .s4f_mint_info_column {
@@ -1225,7 +1226,7 @@
   background-color: #5d38a1;
   background-image: url('../images/background.svg');
   background-position: 0px 0px;
-  background-size: cover;
+  background-size: auto;
   background-repeat: repeat-y;
 }
 
@@ -1251,6 +1252,8 @@
 
 .s4f_about_column {
   width: 100%;
+  display: 'flex';
+  justify-content: 'center';
 }
 
 .s4f_about_column.s4f_web_closed {
@@ -1391,7 +1394,7 @@
 .image-13 {
   display: block;
   width: auto;
-  height: 30vh;
+  height: 18vh;
   margin-right: auto;
   margin-left: auto;
 }
@@ -1929,6 +1932,7 @@
     -ms-flex-align: center;
     align-items: center;
   }
+  
 
   .form {
     -webkit-box-align: center;
