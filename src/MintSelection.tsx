@@ -606,25 +606,7 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
           <div data-w-tab="Tab 1" className="s4f_destination_mint w-tab-pane">
             <div className="columns-7 w-row">
               <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center" }}>
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-                  <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                  <Input
-                    id="standard-adornment-password"
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
+
                 {/* <TextField id="outlined-basic" label="your frens wallet address" variant="outlined" /> */}
                 {/* <TextField id="filled-basic" label="your frens wallet address" style={{color: "white"}} inputProps={{disableUnderline: true}} /> */}
                 {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
