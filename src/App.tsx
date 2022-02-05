@@ -27,7 +27,9 @@ import { MintCountdown } from './MintCountdown';
 const theme = createTheme({
   palette: {
     type: 'dark',
+    
   },
+  
 });
 
 const getCandyMachineIds = (): anchor.web3.PublicKey[] | undefined[] => {
@@ -77,21 +79,18 @@ const App = () => {
     name: 'Nice',
     description: "Send them a sweet message they'll be thinking about all day",
     imgSrc: "images/SWEET_ShibaCupid.png",
-    imgSrcSet: "images/SWEET_ShibaCupid-p-500.png 500w, images/SWEET_ShibaCupid-p-800.png 800w, images/SWEET_ShibaCupid-p-1080.png 1080w, images/SWEET_ShibaCupid-p-1600.png 1600w, images/SWEET_ShibaCupid-p-2000.png 2000w, images/SWEET_ShibaCupid.png 2258w",
     id: niceCandyMachineId
   }
   const naughty: ThemeProps = {
     name: 'Naughty',
     description: "Show them how they make you feel down south",
     imgSrc: "images/NAUGHTY_Ahegao.png",
-    imgSrcSet: "images/NAUGHTY_Ahegao-p-500.png 500w, images/NAUGHTY_Ahegao-p-800.png 800w, images/NAUGHTY_Ahegao-p-1080.png 1080w, images/NAUGHTY_Ahegao-p-1600.png 1600w, images/NAUGHTY_Ahegao-p-2000.png 2000w, images/NAUGHTY_Ahegao.png 2450w",
     id: naughtyCandyMachineId
   }
   const savage: ThemeProps = {
     name: 'Savage',
     description: "Roast them because you care about them",
     imgSrc: "images/SAVAGE_AnimeWaifu.png",
-    imgSrcSet: "images/SAVAGE_AnimeWaifu-p-500.png 500w, images/SAVAGE_AnimeWaifu-p-800.png 800w, images/SAVAGE_AnimeWaifu-p-1080.png 1080w, images/SAVAGE_AnimeWaifu-p-1600.png 1600w, images/SAVAGE_AnimeWaifu-p-2000.png 2000w, images/SAVAGE_AnimeWaifu.png 2858w",
     id: savageCandyMachineId
   }
   const vdayCollection: CollectionProps = {
@@ -99,18 +98,38 @@ const App = () => {
     title: "Valentine's Day",
     subtitle: "Spoil 'em",
     description: "1402 unique Valentine's day themed greeting cards with Nice, Naughty and Savage crypto memes to make hearts flutter, parts throbbing or blood boiling",
-    imgSrc: "images/Valentines-Example.png",
-    imgSrcSet: "images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w"
+    imgSrc: "images/NaughtExample.png",
+    
 
   }
 
+
+  const a: ThemeProps = {
+    name: 'Stupid',
+    description: "Something stupid",
+    imgSrc: "images/SWEET_ShibaCupid.png",
+    id: niceCandyMachineId
+  }
+  const b: ThemeProps = {
+    name: 'Funny',
+    description: "Something Retarded",
+    imgSrc: "images/NAUGHTY_Ahegao.png",
+    id: naughtyCandyMachineId
+  }
+  const c: ThemeProps = {
+    name: 'Retarded',
+    description: "Something Ass",
+    imgSrc: "images/SAVAGE_AnimeWaifu.png",
+    id: savageCandyMachineId
+  }
+
   const bdayCollection: CollectionProps = {
-    themes: [nice, naughty, savage],
+    themes: [a, b, c],
     title: "Birthday Day",
-    subtitle: "Fucke them up",
+    subtitle: "Fuck them up",
     description: "1000 ways to make it go with a bang",
-    imgSrc: "images/Valentines-Example.png",
-    imgSrcSet: "images/Valentines-Example-p-500.png 500w, images/Valentines-Example.png 520w"
+    imgSrc: "images/emptyCard.svg",
+    
 
   }
 
@@ -122,11 +141,6 @@ const App = () => {
     txTimeout: txTimeoutInMilliseconds,
     rpcHost: rpcHost
   }
-
-
-  // const d: Date = new Date('February 14, 2022 00:00:00') 
-  // d.setDate()
-  const [selected, setSelected] = useState<number>(0)
   
   return (
     <ThemeProvider theme={theme}>

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import * as anchor from '@project-serum/anchor';
 
-import { CollectionProps, MintProps, PhantomProps, MintSection, ConnectButton} from './MintSelection';
+import { CollectionProps, MintProps, PhantomProps, MintSection, ConnectButton } from './MintSelection';
 import styled from 'styled-components';
 import { Container, Select, Snackbar, FormControl, InputLabel, MenuItem } from '@material-ui/core';
 
@@ -23,7 +23,9 @@ import { AlertState } from './utils';
 import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
+// import { DimensionedExample } from './Confetti';
 
+// import Fireworks from '@react-canvas-confetti'
 // const ConnectButton = styled(WalletDialogButton)`
 //   width: 100%;
 //   height: 60px;
@@ -34,6 +36,7 @@ import { GatewayProvider } from '@civic/solana-gateway-react';
 //   font-size: 16px;
 //   font-weight: bold;
 // `;
+
 
 
 const MintContainer = styled.div``; // add your owns styles here
@@ -114,10 +117,12 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
     wallet: wallet,
     anchorWallet: anchorWallet
   }
-  
+
   const selectCollections = collections.map(col =>
     (<option value="valentines">{col.title}</option>)
   )
+
+
 
   return (
     <div>
@@ -130,8 +135,8 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
           </a>
           <nav role="navigation" className="nav-menu w-nav-menu">
             <a href="index.html" aria-current="page" className="s4f_nav_link w-nav-link w--current">Home</a>
-            <a href="about.html" className="s4f_nav_link w-nav-link"><span>About</span></a>
-            <a href="about.html" className="s4f_nav_link w-nav-link">Instructions</a>
+            <a href="about.html#about" className="s4f_nav_link w-nav-link"><span>About</span></a>
+            <a href="about.html#instruction" className="s4f_nav_link w-nav-link">Instructions</a>
             {/* {!wallet.connected ? (<a> <Container><ConnectButton>Connect wallet</ConnectButton></Container></a>) : (<a href="#mint-start" className="s4f_mint_button s4f_nav_version w-nav-link">mint now</a>)} */}
             <a href="#mint-start" className="s4f_mint_button s4f_nav_version w-nav-link">MINT</a>
             <div className="s4f_socials_array s4f_menu w-row">
@@ -167,18 +172,19 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               alt="" className="image" /></div>
             <div className="column w-col w-col-6 w-col-small-6">
               <h1 className="s4f_h1"><strong>Send sumthin 4 a fren or sumthin 4 urself, u lonely fuk.</strong></h1>
-              <h1 className="s4f_h2">Save paper, make it last forever on the blockchain</h1>
+              <h1 className="s4f_h2">Save a tree from dying and send a S4F card instead</h1>
             </div>
           </div>
           <div className="s4f_status w-row">
             <div className="s4f_banner_column w-col w-col-4">
               <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
             </div>
+
             <div className="s4f_banner_column w-col w-col-4">
-              
+              {/* <a href="#" className="s4f_button facebook w-button"></a> */}
               {!wallet.connected ? (
-              <div style={{width: "100%", alignItems: "center"}}>
-              <Container><ConnectButton>Connect wallet</ConnectButton></Container></div>) : (
+                <div style={{ width: "100%", alignItems: "center" }}>
+                  <Container><ConnectButton>Connect wallet</ConnectButton></Container></div>) : (
                 <MintCountdown date={toDate(
                   candyMachine?.state.goLiveDate
                     ? candyMachine?.state.goLiveDate
@@ -187,29 +193,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
                       : undefined,
                 )}
                   style={{ justifyContent: 'flex-end' }}
-                  status={
-                    !candyMachine?.state?.isActive || candyMachine?.state?.isSoldOut
-                      ? 'COMPLETED'
-                      : candyMachine?.state.isPresale
-                        ? 'PRESALE'
-                        : 'LIVE'
-                  } />)}
- 
-                  {/* <MintCountdown date={toDate(
-                  candyMachine?.state.goLiveDate
-                    ? candyMachine?.state.goLiveDate
-                    : candyMachine?.state.isPresale
-                      ? new anchor.BN(new Date().getTime() / 1000)
-                      : undefined,
-                )}
-                  style={{ justifyContent: 'flex-end' }}
-                  status={
-                    !candyMachine?.state?.isActive || candyMachine?.state?.isSoldOut
-                      ? 'COMPLETED'
-                      : candyMachine?.state.isPresale
-                        ? 'PRESALE'
-                        : 'LIVE'
-                  } /> */}
+                  status={'OUT NOW'} />)}
             </div>
             <div className="s4f_banner_column w-col w-col-4">
               <a href="#mint-start" className="s4f_hero_button w-button">start sending</a>
@@ -238,10 +222,16 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
           </div>
         </div>
       </div>
-
-      {/* {showMintSection()} */}
-      <MintSection allCollections={collections} info={props} phantom={phantom}></MintSection>
-
+      <div className="w-container">
+        <h3 className="s4f_h3">
+          More than just your typical NFT when you buy S4F</h3>
+        <div className="s4f_par" >
+          Our mission is to be a sustainable project and onboard new-comers to NFT in an affordable yet fun way.
+          <br /><br />Each card has been custom-made to suit the year's feel and emotion within the crypto community.
+        </div>
+        <div style={{ height: "20px" }} />
+        <MintSection allCollections={collections} info={props} phantom={phantom}></MintSection>
+      </div>
     </div>
   )
 };
