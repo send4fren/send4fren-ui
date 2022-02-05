@@ -28,7 +28,7 @@ import { LensTwoTone } from '@material-ui/icons';
 import { StringLiteralLike } from 'typescript';
 import { getParsedNftAccountsByOwner, isValidSolanaAddress, createConnectionConfig, } from "@nfteyez/sol-rayz";
 import { CastConfetti } from './Confetti';
-import { FormControl, Input, InputAdornment, FormHelperText } from '@material-ui/core';
+import { FormControl, Input, InputAdornment, FormHelperText, OutlinedInput } from '@material-ui/core';
 
 // import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import {
@@ -277,7 +277,7 @@ const OnMint = async (candyMachine: CandyMachineAccount | undefined, mutual: Can
       const mintTxIds = (
         await mintOneToken(candyMachine, mutual.wallet.publicKey)
       );
-      const mintTxId = mintTxIds[mintTxIds.length-1];
+      const mintTxId = mintTxIds[mintTxIds.length - 1];
       mutual.setTxId(mintTxId);
 
       let status: any = { err: true };
@@ -605,8 +605,19 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
         <div className="tabs-content w-tab-content">
           <div data-w-tab="Tab 1" className="s4f_destination_mint w-tab-pane">
             <div className="columns-7 w-row">
+              {/* <form action="#">
+                <label for="fname">First name:</label>
+                <input type="text" id="fname" name="fname"/><br><br>
+                  <label for="lname">Last name:</label>
+                  <input type="text" id="lname" name="lname"/><br><br>
+                    <input type="submit" value="
+                    Submit"/>
+                    </form> */}
               <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center" }}>
-
+                <FormControl style={{width: "90%", textAlign: "center", background: "white", borderRadius: "25px", padding: "10px"}}>
+                  <Input style={{color: "black", padding: "10px"}} placeholder="enter your frens address" />
+                  {/* <MyFormHelperText /> */}
+                </FormControl>
                 {/* <TextField id="outlined-basic" label="your frens wallet address" variant="outlined" /> */}
                 {/* <TextField id="filled-basic" label="your frens wallet address" style={{color: "white"}} inputProps={{disableUnderline: true}} /> */}
                 {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
