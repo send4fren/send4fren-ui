@@ -49,6 +49,7 @@ interface MintCountdownProps {
   date: Date | undefined;
   style?: React.CSSProperties;
   status?: string;
+  setMintText?: React.Dispatch<React.SetStateAction<string>>,
   onComplete?: () => void;
 }
 
@@ -64,6 +65,7 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
   date,
   status,
   style,
+  setMintText,
   onComplete,
 }) => {
   const classes = useStyles();
@@ -76,7 +78,16 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
   }: MintCountdownRender) => {
     hours += days * 24;
     if (completed) {
+      if (setMintText) {
+        setMintText("Mint now");
+      }
       return status ? <span className={classes.done}>{status}</span> : null;
+      // return (
+      //   <div>
+      //     <span className={classes.done}>{"OUT NOW"}</span>
+      //     <a href="#mint-start" className="s4f_hero_button w-button">{"start sending"}</a>  
+      //   </div>
+      // )
     } else {
       return (
         <div className={classes.root} style={style}>
@@ -98,6 +109,9 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
             </span>
             <span>secs</span>
           </Paper>
+          {/* <div className="s4f_banner_column w-col w-col-4">
+            <a href="#mint-start" className="s4f_hero_button w-button">{"learn more"}</a>
+          </div> */}
         </div>
       );
     }

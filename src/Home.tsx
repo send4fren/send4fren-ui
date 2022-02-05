@@ -23,7 +23,6 @@ import { AlertState } from './utils';
 import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
-
 // import { DimensionedExample } from './Confetti';
 
 // import Fireworks from '@react-canvas-confetti'
@@ -73,6 +72,9 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
     } as anchor.Wallet;
   }, [wallet]);
   const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
+
+  const [mintText, setMintText] = useState<string>("Learn more");
+
 
   const refreshCandyMachineState = useCallback(async () => {
     if (!anchorWallet) {
@@ -182,10 +184,13 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
             </div>
 
             <div className="s4f_banner_column w-col w-col-4">
-              {/* <a href="#" className="s4f_button facebook w-button"></a> */}
-              {!wallet.connected ? (
-                <div style={{ width: "100%", alignItems: "center" }}>
-                  <Container><ConnectButton>Connect wallet</ConnectButton></Container></div>) : (
+            <MintCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }} 
+              status={'OUT NOW'} setMintText={setMintText}/>
+            {/* <MintCountdown date={new Date()} style={{ justifyContent: 'flex-end' }} status={'OUT NOW'} setMintText={setMintText}/> */}
+              {/* {!wallet.connected ? (<MintCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')}
+              // {!wallet.connected ? (<MintCountdown date={new Date()}
+                  style={{ justifyContent: 'flex-end' }}
+                  status={'OUT NOW'} />) : (
                 <MintCountdown date={toDate(
                   candyMachine?.state.goLiveDate
                     ? candyMachine?.state.goLiveDate
@@ -194,14 +199,15 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
                       : undefined,
                 )}
                   style={{ justifyContent: 'flex-end' }}
-                  status={'OUT NOW'} />)}
+                  status={'OUT NOW'} />)} */}
             </div>
             <div className="s4f_banner_column w-col w-col-4">
-              <a href="#mint-start" className="s4f_hero_button w-button">start sending</a>
+              <a href="#mint-start" className="s4f_hero_button w-button">{mintText}</a>
             </div>
           </div>
         </div>
       </div>
+      
       <div className="section-3 wf-section">
         <div className="div-block-9">
           <div className="s4f_socials_array w-row">
