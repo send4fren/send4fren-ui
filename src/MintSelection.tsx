@@ -274,9 +274,10 @@ const OnMint = async (candyMachine: CandyMachineAccount | undefined, mutual: Can
     mutual.setIsUserMinting(true);
     document.getElementById('#identity')?.click();
     if (mutual.wallet.connected && candyMachine?.program && mutual.wallet.publicKey) {
-      const mintTxId = (
+      const mintTxIds = (
         await mintOneToken(candyMachine, mutual.wallet.publicKey)
-      )[0];
+      );
+      const mintTxId = mintTxIds[mintTxIds.length-1];
       mutual.setTxId(mintTxId);
 
       let status: any = { err: true };

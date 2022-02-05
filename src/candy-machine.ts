@@ -1,3 +1,4 @@
+import { RestoreOutlined } from '@material-ui/icons';
 import * as anchor from '@project-serum/anchor';
 
 import { MintLayout, TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
@@ -246,7 +247,7 @@ export const getCandyMachineCreator = async (
 export const mintOneToken = async (
   candyMachine: CandyMachineAccount,
   payer: anchor.web3.PublicKey,
-  // dest: anchor.web3.PublicKey | undefined
+  dest?: anchor.web3.PublicKey
 ): Promise<(string | undefined)[]> => {
   const mint = anchor.web3.Keypair.generate();
 
@@ -381,6 +382,7 @@ export const mintOneToken = async (
     const transferAuthority = anchor.web3.Keypair.generate();
 
     signers.push(transferAuthority);
+
     remainingAccounts.push({
       pubkey: userPayingAccountAddress,
       isWritable: true,
@@ -444,42 +446,40 @@ export const mintOneToken = async (
   );
 
   // Instructions for sending to dest address
-  // dest = new PublicKey('5NkwxTxUaVTnwVn4mMurtrpDKqMbDTmn18ig9uCawVrG')
-  // if (dest) {
-  //   let dest_ata = await Token.getAssociatedTokenAddress(
-  //     ASSOCIATED_TOKEN_PROGRAM_ID,
-  //     TOKEN_PROGRAM_ID,
-  //     mint.publicKey,
-  //     dest
-  //   )
+  if (dest) {
+    let dest_ata = await Token.getAssociatedTokenAddress(
+      ASSOCIATED_TOKEN_PROGRAM_ID,
+      TOKEN_PROGRAM_ID,
+      mint.publicKey,
+      dest
+    )
 
-  //   instructions.push(
-  //     Token.createAssociatedTokenAccountInstruction(
-  //       ASSOCIATED_TOKEN_PROGRAM_ID,
-  //       TOKEN_PROGRAM_ID,
-  //       mint.publicKey,
-  //       dest_ata,
-  //       dest,
-  //       payer
-  //     )
-  //   )
+    instructions.push(
+      Token.createAssociatedTokenAccountInstruction(
+        ASSOCIATED_TOKEN_PROGRAM_ID,
+        TOKEN_PROGRAM_ID,
+        mint.publicKey,
+        dest_ata,
+        dest,
+        payer
+      )
+    )
+    instructions.push(
+      Token.createTransferCheckedInstruction(
+        TOKEN_PROGRAM_ID,
+        userTokenAccountAddress,
+        mint.publicKey,
+        dest_ata,
+        payer,
+        [],
+        1,
+        0
+      )
+    )
+  }
 
-  //   instructions.push(
-  //     Token.createTransferCheckedInstruction(
-  //       TOKEN_PROGRAM_ID,
-  //       userTokenAccountAddress, // LIKELY PROBLEM LINE
-  //       mint.publicKey,
-  //       dest_ata,
-  //       payer,
-  //       [],
-  //       1e8,
-  //       8
-  //     )
-  //   )
-  // }
-
-  try {
-    return (
+  try {    
+    const res = (
       await sendTransactions(
         candyMachine.program.provider.connection,
         candyMachine.program.provider.wallet,
@@ -487,11 +487,12 @@ export const mintOneToken = async (
         [signers, []],
       )
     ).txs.map(t => t.txid);
+    
+    return res;
   } catch (e) {
     console.log(e);
+    return [];
   }
-
-  return [];
 };
 
 export const shortenAddress = (address: string, chars = 4): string => {
