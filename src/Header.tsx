@@ -46,7 +46,7 @@ export const Header = ({ candyMachine, reloadWhen }: HeaderProps) => {
       <Grid container direction="row" wrap="nowrap" >
         {candyMachine && (
           <Grid container direction="row" wrap="nowrap">
-            <Grid container direction="column" >
+            {/* <Grid container direction="column" >
               <Typography variant="body2" color="textSecondary">
                 Remaining
                 
@@ -61,7 +61,7 @@ export const Header = ({ candyMachine, reloadWhen }: HeaderProps) => {
               > 
                 {remaining ? (remaining) : (candyMachine.state.itemsRemaining)}
               </Typography>
-            </Grid>
+            </Grid> */}
             
             <Grid container direction="column">
               <Typography variant="body2" color="textSecondary">
