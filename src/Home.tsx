@@ -226,7 +226,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
         </div>
         <div style={{ height: "20px" }} />
         <MintSection allCollections={collections} info={props} phantom={phantom}></MintSection>
-        <div style={{ height: "800px" }} />
+        <div style={{ height: "50vh" }} />
       </div>
     </div>
   )
