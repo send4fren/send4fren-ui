@@ -109,7 +109,10 @@ text-align: center;
 `;
 
 // Style for the Mint button
-const MintContainer = styled.div``; // add your owns styles here
+const MintContainer = styled.div`
+  width: 100%;
+  margin: 0 auto;
+`; // add your owns styles here
 
 // Minting information necessary to run the candy machine
 // collection holds each individual candy machine
@@ -224,48 +227,48 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
   // mutual.setTxId("2cshdLj3QCMfnvp3ihaKCMq2o3L1Mr64jBTYP7N8Lr4JArBdSHLpFKRrLegj6pv6K2SLFjtM7fncr5LCVaopFMvN")
 
   return (
-    <Container style={{display: "flex", justifyContent: "center"}}>
+    <Container >
       {!mutual.wallet.connected ? (
         <ConnectButton>Connect wallet</ConnectButton>
       ) : (
         <>
-          <div>
           <Header candyMachine={candyMachine} reloadWhen={mutual.isUserMinting} />
-          <MintContainer>
-            {candyMachine?.state.isActive &&
-              candyMachine?.state.gatekeeper &&
-              mutual.wallet.publicKey &&
-              mutual.wallet.signTransaction ? (
-              <GatewayProvider
-                wallet={{
-                  publicKey:
-                    mutual.wallet.publicKey ||
-                    new PublicKey(CANDY_MACHINE_PROGRAM),
-                  //@ts-ignore
-                  signTransaction: mutual.wallet.signTransaction,
-                }}
-                gatekeeperNetwork={
-                  candyMachine?.state?.gatekeeper?.gatekeeperNetwork
-                }
-                clusterUrl={mutual.rpcUrl}
-                options={{ autoShowModal: false }}
-              >
+          <div style={{display: "flex", justifyContent: "center"}}>
+            <div>
+              {candyMachine?.state.isActive &&
+                candyMachine?.state.gatekeeper &&
+                mutual.wallet.publicKey &&
+                mutual.wallet.signTransaction ? (
+                <GatewayProvider
+                  wallet={{
+                    publicKey:
+                      mutual.wallet.publicKey ||
+                      new PublicKey(CANDY_MACHINE_PROGRAM),
+                    //@ts-ignore
+                    signTransaction: mutual.wallet.signTransaction,
+                  }}
+                  gatekeeperNetwork={
+                    candyMachine?.state?.gatekeeper?.gatekeeperNetwork
+                  }
+                  clusterUrl={mutual.rpcUrl}
+                  options={{ autoShowModal: false }}
+                >
+                  <MintButton
+                    candyMachine={candyMachine}
+                    isMinting={mutual.isUserMinting}
+                    onMint={() => OnMint(candyMachine, mutual, info, destination)}
+                  />
+                </GatewayProvider>
+              ) : (
                 <MintButton
                   candyMachine={candyMachine}
                   isMinting={mutual.isUserMinting}
                   onMint={() => OnMint(candyMachine, mutual, info, destination)}
                 />
-              </GatewayProvider>
-            ) : (
-              <MintButton
-                candyMachine={candyMachine}
-                isMinting={mutual.isUserMinting}
-                onMint={() => OnMint(candyMachine, mutual, info, destination)}
-              />
-            )}
-            <MintFinish recipTxId={mutual?.recipTxId} txId={mutual?.txId} connection={info.connection} mutual={mutual} />
+              )}
+              <MintFinish recipTxId={mutual?.recipTxId} txId={mutual?.txId} connection={info.connection} mutual={mutual} />
 
-          </MintContainer>
+            </div>
           </div>
         </>
       )}
@@ -646,10 +649,10 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
                 {/* <TextField id="filled-basic" label="your frens wallet address" style={{color: "white"}} inputProps={{disableUnderline: true}} /> */}
                 {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
               </Box>
-              <div style={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
-              {DisplayCandyMachine(candyMachine, mutual, info, recipientAddress)}
+              <div style={{ width: "100%", display: "flex", justifyContent: "center", alignContent: "center" }}>
+                {DisplayCandyMachine(candyMachine, mutual, info, recipientAddress)}
               </div>
-              
+
 
             </div>
           </div>

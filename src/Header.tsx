@@ -42,8 +42,8 @@ export const Header = ({ candyMachine, reloadWhen }: HeaderProps) => {
   // }
 
   return (
-    <Grid container direction="row" justifyContent="center" wrap="nowrap">
-      <Grid container direction="row" wrap="nowrap">
+    <Grid container direction="row" justifyContent="center" wrap="nowrap" style={{width: "100%"}}>
+      <Grid container direction="row" wrap="nowrap" >
         {candyMachine && (
           <Grid container direction="row" wrap="nowrap">
             <Grid container direction="column" >

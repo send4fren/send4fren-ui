@@ -17,16 +17,15 @@ import { useEffect, useState } from 'react';
 // `; // add your own styles here
 
 export const CTAButton = styled(Button)`
-  width: fit-contents;
-  height: 60px;
   margin-top: 10px;
-  margin-bottom: 5px;
+  width: fit-content;
   background-color: #f7891e;
-  box-shadow: 3px 3px 4px 0 #3a3a3a;
   color: white;
   font-size: 16px;
   font-weight: bold;
   border-radius: 25px;
+  box-shadow: 0px 6px 0 #c06d19;
+
   
 `; // add your own styles here
 
