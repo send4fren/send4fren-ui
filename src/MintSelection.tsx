@@ -594,10 +594,10 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
       <h2 className="s4f_h3">for who?</h2>
       <div data-current="Tab 2" data-easing="ease" data-duration-in="300" data-duration-out="100" className="s4f_tabs s4f_tabs_mint w-tabs">
         <div className="s4f_destination w-tab-menu">
-          <a data-w-tab="Tab 1" className="s4f_destination s4f_theme_tab s4f_phone_tab w-inline-block w-tab-link">
+          <a data-w-tab="Tab 1" className="s4f_destination s4f_theme_tab s4f_phone_tab w-inline-block w-tab-link w--current">
             <div className="s4f_h3">send 4 fren</div>
           </a>
-          <a data-w-tab="Tab 2" className="s4f_theme_tab s4f_destination s4f_phone_tab w-inline-block w-tab-link w--current">
+          <a data-w-tab="Tab 2" className="s4f_theme_tab s4f_destination s4f_phone_tab w-inline-block w-tab-link">
             <div className="s4f_h3">send 4 me</div>
           </a>
         </div>
@@ -607,7 +607,7 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
             <h2 className="s4f_h3">enter your frens address</h2>
               <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center" ,paddingBottom: "10px"}}>
                 <FormControl style={{ width: "90%", textAlign: "center", background: "white", borderRadius: "25px", padding: "10px" }}>
-                  <Input style={{ color: "black", padding: "10px" }} placeholder="solana address" onChange={(
+                  <Input style={{ color: "black"}} placeholder="solana address" onChange={(
                     ev: React.ChangeEvent<HTMLInputElement>,
                   ): void => {
                     setRecipientAddress(ev.target.value)
