@@ -177,68 +177,22 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
             <div className="column w-col w-col-6 w-col-small-6">
               <h1 className="s4f_h1"><strong>Send sumthin 4 a fren or sumthin 4 urself, u lonely fuk.</strong></h1>
               <h1 className="s4f_h2" style={{ marginBottom: "20px" }}>Save a tree from dying and send a S4F card instead</h1>
-              <div style={{width: "100%", borderRadius: "25px", background: "rgba(28,12,57,0.5)" }}>
-                <h3 className="s4f_h3" style={{ marginTop: "20px", opacity: "100%"}}>Valentine&#x27;s Day Set</h3>
-                <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
-                <CoolCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }}
-                  status={'OUT NOW'} setMintText={setMintText} />
+              <div style={{ width: "100%", borderRadius: "25px", background: "rgba(28,12,57,0.5)" }}>
+                <h3 className="s4f_h3" style={{ marginTop: "20px", opacity: "100%" }}>Valentine&#x27;s Day Set</h3>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                  <CoolCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }}
+                    status={'OUT NOW'} setMintText={setMintText} />
                 </div>
 
-                <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
                   <a href="#mint-start" className="s4f_hero_button w-button">{mintText}</a>
                 </div>
 
               </div>
-
-
-
-
-              {/* <MintCountdown date={new Date()} style={{ justifyContent: 'flex-end' }} status={'OUT NOW'} setMintText={setMintText}/> */}
-              {/* {!wallet.connected ? (<MintCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')}
-              // {!wallet.connected ? (<MintCountdown date={new Date()}
-                  style={{ justifyContent: 'flex-end' }}
-                  status={'OUT NOW'} />) : (
-                <MintCountdown date={toDate(
-                  candyMachine?.state.goLiveDate
-                    ? candyMachine?.state.goLiveDate
-                    : candyMachine?.state.isPresale
-                      ? new anchor.BN(new Date().getTime() / 1000)
-                      : undefined,
-                )}
-                  style={{ justifyContent: 'flex-end' }}
-                  status={'OUT NOW'} />)} */}
             </div>
           </div>
         </div>
-        {/* <div style={{ background: "black", borderRadius: "25px", padding: "10px", width: "90vw", display: "flex", justifyContent: "center", alignContent: "center" }}>
-          <Grid container direction="row" justifyContent="center" wrap="nowrap" alignContent='center' style={{ width: "90vw" }}>
-            <Grid container direction="row" wrap="nowrap">
-              <Grid container direction="column" justifyContent="center" alignContent='center'>
-                <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
-              </Grid>
-              <Grid container direction="column" justifyContent="center" alignContent='center'>
-                <a href="#mint-start" className="s4f_hero_button w-button">{mintText}</a>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div> */}
 
-{/* 
-        <div className="s4f_status w-row">
-          <div className="s4f_banner_column w-col w-col-4">
-            <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
-          </div>
-          <div className="s4f_banner_column w-col w-col-4">
-            <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
-          </div>
-
-          <div className="s4f_banner_column w-col w-col-4">
-
-            <div className="s4f_banner_column w-col w-col-4">
-              <a href="#mint-start" className="s4f_hero_button w-button">{mintText}</a>
-            </div>
-          </div>
-        </div> */}
       </div>
 
       <div className="section-3 wf-section">
@@ -272,6 +226,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
         </div>
         <div style={{ height: "20px" }} />
         <MintSection allCollections={collections} info={props} phantom={phantom}></MintSection>
+        <div style={{ height: "800px" }} />
       </div>
     </div>
   )

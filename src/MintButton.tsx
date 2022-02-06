@@ -25,6 +25,8 @@ export const CTAButton = styled(Button)`
   font-weight: bold;
   border-radius: 25px;
   box-shadow: 0px 6px 0 #c06d19;
+  marginLeft: 20px;
+  marginRight: 20px
 
   
 `; // add your own styles here
