@@ -80,7 +80,7 @@ import {
 // Style for the connect button
 export const ConnectButton = styled(WalletDialogButton)`
 text-align: center;
-    width: fit-contents;
+    width: 95%;
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: #f7891e;
@@ -236,7 +236,7 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
       ) : (
         <>
           <Header candyMachine={candyMachine} reloadWhen={mutual.isUserMinting} />
-          <div style={{display: "flex", justifyContent: "center"}}>
+          <div style={{width: "100%"}}>
             <div>
               {candyMachine?.state.isActive &&
                 candyMachine?.state.gatekeeper &&

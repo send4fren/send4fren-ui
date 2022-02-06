@@ -1352,7 +1352,7 @@
 
 .timeline_bar {
   display: block;
-  width: 10px;
+  width: 1px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
