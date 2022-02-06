@@ -475,6 +475,7 @@
 
 .s4f_hero_button:hover {
   background-color: #eb7500;
+  box-shadow: 0 6px #442506;
 }
 
 .s4f_hero_button:active {
