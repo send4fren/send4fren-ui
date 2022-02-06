@@ -75,23 +75,32 @@ const App = () => {
     [],
   );
 
+  let startDate = (new Date('07 Feb 2022 00:00:00 UTC+11'))
+  let endDate = (new Date('21 Feb 2022 00:00:00 UTC+11'))
+
   const nice: ThemeProps = {
     name: 'Nice',
     description: "Send them a sweet message they'll be thinking about all day",
     imgSrc: "images/SWEET_ShibaCupid.png",
-    id: niceCandyMachineId
+    id: niceCandyMachineId, 
+    startDate: startDate,
+    endDate: endDate
   }
   const naughty: ThemeProps = {
     name: 'Naughty',
     description: "Show them how they make you feel down south",
     imgSrc: "images/NAUGHTY_Ahegao.png",
-    id: naughtyCandyMachineId
+    id: naughtyCandyMachineId,
+    startDate: startDate,
+    endDate: endDate
   }
   const savage: ThemeProps = {
     name: 'Savage',
     description: "Roast them because you care about them",
     imgSrc: "images/SAVAGE_Monkey.png",
-    id: savageCandyMachineId
+    id: savageCandyMachineId,
+    startDate: startDate,
+    endDate: endDate
   }
   const vdayCollection: CollectionProps = {
     themes: [nice, naughty, savage],
@@ -99,7 +108,8 @@ const App = () => {
     subtitle: "Spoil 'em",
     description: "1402 unique Valentine's day themed greeting cards with Nice, Naughty and Savage crypto memes to make hearts flutter, parts throbbing or blood boiling",
     imgSrc: "images/446.png",
-    
+    startDate: startDate,
+    endDate: endDate
 
   }
 
@@ -108,7 +118,7 @@ const App = () => {
     name: 'Stupid',
     description: "Something stupid",
     imgSrc: "images/SWEET_ShibaCupid.png",
-    id: niceCandyMachineId
+    id: niceCandyMachineId,
   }
   const b: ThemeProps = {
     name: 'Funny',

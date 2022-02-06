@@ -11,7 +11,7 @@ import Alert from '@material-ui/lab/Alert';
 import { PublicKey } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletDialogButton } from '@solana/wallet-adapter-material-ui';
-import { MintCountdown } from './MintCountdown';
+import { CoolCountdown, MintCountdown } from './MintCountdown';
 import {
   awaitTransactionSignatureConfirmation,
   CandyMachineAccount,
@@ -23,6 +23,7 @@ import { AlertState } from './utils';
 import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
+import { Grid } from '@material-ui/core';
 // import { DimensionedExample } from './Confetti';
 
 // import Fireworks from '@react-canvas-confetti'
@@ -132,8 +133,8 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
         role="banner" className="navbar w-nav">
         <div className="container-3 w-container">
-          <a href="#" className="brand-2 w-nav-brand"><img src="images/Frame-15.svg" loading="lazy" alt="" /></a>
-          <a href="#" className="brand w-nav-brand">
+          <a href="index.html" className="brand-2 w-nav-brand"><img src="images/Frame-15.svg" loading="lazy" alt="" /></a>
+          <a href="index.html" className="brand w-nav-brand">
             <h3 className="s4f_h3 s4f_logo_title">send 4 fren</h3>
           </a>
           <nav role="navigation" className="nav-menu w-nav-menu">
@@ -144,18 +145,18 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
             <a href="#mint-start" className="s4f_mint_button s4f_nav_version w-nav-link">MINT</a>
             <div className="s4f_socials_array s4f_menu w-row">
               <div className="s4f_socials w-col w-col-4">
-                <a href={twitter} target="_blank">
-                  <img src="images/Twitter-Icon.png" loading="lazy" alt="" />
+                <a href={twitter} target="_blank" >
+                  <img src="images/twitter.png" loading="lazy" alt="" />
                 </a>
               </div>
               <div className="s4f_socials w-col w-col-4" >
                 <a href={discord} target="_blank">
-                  <img src="images/Discord-Icon.png" loading="lazy" alt="" />
+                  <img src="images/discord.png" loading="lazy" alt="" />
                 </a>
               </div>
               <div className="s4f_socials w-col w-col-4">
                 <a href={instagram} target="_blank">
-                  <img src="images/Instagram-Icon.png" loading="lazy" alt="" />
+                  <img src="images/instagram.png" loading="lazy" alt="" />
                 </a>
               </div>
             </div>
@@ -175,18 +176,24 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               alt="" className="image" /></div>
             <div className="column w-col w-col-6 w-col-small-6">
               <h1 className="s4f_h1"><strong>Send sumthin 4 a fren or sumthin 4 urself, u lonely fuk.</strong></h1>
-              <h1 className="s4f_h2">Save a tree from dying and send a S4F card instead</h1>
-            </div>
-          </div>
-          <div className="s4f_status w-row">
-            <div className="s4f_banner_column w-col w-col-4">
-              <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
-            </div>
+              <h1 className="s4f_h2" style={{ marginBottom: "20px" }}>Save a tree from dying and send a S4F card instead</h1>
+              <div style={{width: "100%", borderRadius: "25px", background: "rgba(28,12,57,0.5)" }}>
+                <h3 className="s4f_h3" style={{ marginTop: "20px", opacity: "100%"}}>Valentine&#x27;s Day Set</h3>
+                <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
+                <CoolCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }}
+                  status={'OUT NOW'} setMintText={setMintText} />
+                </div>
 
-            <div className="s4f_banner_column w-col w-col-4">
-            <MintCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }} 
-              status={'OUT NOW'} setMintText={setMintText}/>
-            {/* <MintCountdown date={new Date()} style={{ justifyContent: 'flex-end' }} status={'OUT NOW'} setMintText={setMintText}/> */}
+                <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
+                  <a href="#mint-start" className="s4f_hero_button w-button">{mintText}</a>
+                </div>
+
+              </div>
+
+
+
+
+              {/* <MintCountdown date={new Date()} style={{ justifyContent: 'flex-end' }} status={'OUT NOW'} setMintText={setMintText}/> */}
               {/* {!wallet.connected ? (<MintCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')}
               // {!wallet.connected ? (<MintCountdown date={new Date()}
                   style={{ justifyContent: 'flex-end' }}
@@ -201,29 +208,56 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
                   style={{ justifyContent: 'flex-end' }}
                   status={'OUT NOW'} />)} */}
             </div>
+          </div>
+        </div>
+        {/* <div style={{ background: "black", borderRadius: "25px", padding: "10px", width: "90vw", display: "flex", justifyContent: "center", alignContent: "center" }}>
+          <Grid container direction="row" justifyContent="center" wrap="nowrap" alignContent='center' style={{ width: "90vw" }}>
+            <Grid container direction="row" wrap="nowrap">
+              <Grid container direction="column" justifyContent="center" alignContent='center'>
+                <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
+              </Grid>
+              <Grid container direction="column" justifyContent="center" alignContent='center'>
+                <a href="#mint-start" className="s4f_hero_button w-button">{mintText}</a>
+              </Grid>
+            </Grid>
+          </Grid>
+        </div> */}
+
+{/* 
+        <div className="s4f_status w-row">
+          <div className="s4f_banner_column w-col w-col-4">
+            <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
+          </div>
+          <div className="s4f_banner_column w-col w-col-4">
+            <h3 className="s4f_h3">Valentine&#x27;s Day Set</h3>
+          </div>
+
+          <div className="s4f_banner_column w-col w-col-4">
+
             <div className="s4f_banner_column w-col w-col-4">
               <a href="#mint-start" className="s4f_hero_button w-button">{mintText}</a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
-      
+
       <div className="section-3 wf-section">
         <div className="div-block-9">
           <div className="s4f_socials_array w-row">
             <div className="s4f_socials w-col w-col-4">
               <a href={twitter} target="_blank">
-                <img src="images/Twitter-Icon.png" loading="lazy" alt="" />
+
+                <img src="images/twitter.png" loading="lazy" alt="" />
               </a>
             </div>
             <div className="s4f_socials w-col w-col-4">
               <a href={discord} target="_blank">
-                <img src="images/Discord-Icon.png" loading="lazy" alt="" />
+                <img src="images/discord.png" loading="lazy" alt="" />
               </a>
             </div>
             <div className="s4f_socials w-col w-col-4">
               <a href={instagram} target="_blank"><img
-                src="images/Instagram-Icon.png" loading="lazy" alt="" />
+                src="images/instagram.png" loading="lazy" alt="" />
               </a>
             </div>
           </div>

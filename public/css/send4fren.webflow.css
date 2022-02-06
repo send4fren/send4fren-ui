@@ -15,12 +15,14 @@
   justify-content: center;
   background-color: transparent;
   font-family: 'Varela Round', sans-serif;
+  align-content: center;
 }
 
 .s4f_h1 {
   display: block;
   font-family: 'Varela Round', sans-serif;
   color: #fff;
+  text-align: center;
 }
 
 .s4f_h2 {
@@ -28,6 +30,7 @@
   font-size: 24px;
   line-height: 30px;
   text-shadow: 1px 1px 6px #000;
+  text-align: center;
 }
 
 
@@ -61,6 +64,12 @@
   -ms-transform: rotate(37deg);
   transform: rotate(37deg);
   text-align: left;
+}
+
+.social_button {
+  width: 30px;
+  height: 30px;
+  background-color: white;
 }
 
 .container {
@@ -98,7 +107,7 @@
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .column-2 {
@@ -179,7 +188,8 @@
   background-image: url('../images/background.svg');
   background-position: 0px 0px;
   background-size: cover;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   /* animation: moveIt 10s linear infinite; */
   
 }
@@ -417,7 +427,8 @@
   display: -ms-flexbox;
   display: flex;
   max-height: 40px;
-  min-width: 90%;
+  width: fit-content;
+  /* min-width: 90%; */
   margin-top: 10px;
   margin-bottom: 10px;
   -webkit-box-orient: vertical;
@@ -435,8 +446,19 @@
   align-items: stretch;
   border-radius: 25px;
   background-color: #9c80cf;
+  box-shadow: 0 6px #471e92;
   font-size: 24px;
   text-align: center;
+}
+
+.s4f_hero_button:hover {
+  background-color: #eb7500;
+}
+
+.s4f_hero_button:active {
+  background-color: #f7891e;
+  box-shadow: 0 2px #442506;
+  transform: translateY(2px);
 }
 
 .text-block-2 {
@@ -506,6 +528,7 @@
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-top: 50px;
 }
 
 .s4f_mint {
@@ -583,7 +606,7 @@
   align-items: center;
   border-radius: 25px;
   background-color: #f7891e;
-  box-shadow: 3px 3px 4px 0 #3a3a3a;
+  box-shadow: 0px 6px 0 #c06d19;
   font-family: 'Varela Round', sans-serif;
 
   text-align: center;
@@ -595,6 +618,16 @@
   padding-top: 10px;
   padding-bottom: 10px;
   color: #fff;
+}
+
+.s4f_mint_button.s4f_nav_version:hover {
+  background-color: #eb7500;
+}
+
+.s4f_mint_button.s4f_nav_version:active {
+  background-color: #f7891e;
+  box-shadow: 0 2px #442506;
+  transform: translateY(2px);
 }
 
 .form {
@@ -1452,8 +1485,39 @@
 }
 
 .s4f_socials {
-  margin-top: 10px;
-  padding-bottom: 10px;
+  
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: white;
+  justify-content: center;
+  /* box-shadow: 3px 3px 4px 0 #3a3a3a; */
+  box-shadow: 0 6px #999;
+}
+
+.s4f_socials:hover {
+  background-color: #9c80cf;
+}
+
+.s4f_socials:active {
+  background-color: #999;
+  box-shadow: 0 2px #666;
+  transform: translateY(2px);
+}
+
+
+
+
+
+.s4f_social_button {
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
 }
 
 .columns-11 {
@@ -1503,7 +1567,7 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 20vw;
+  width: 10vw;
   height: 30vh;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -1792,6 +1856,7 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+    
   }
 
   .s4f_theme_tab {

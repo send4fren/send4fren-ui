@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 // `; // add your own styles here
 
 export const CTAButton = styled(Button)`
-  width: 100%;
+  width: fit-contents;
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;

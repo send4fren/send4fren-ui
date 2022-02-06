@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head prefix>
   <meta charset="utf-8" />
   <link rel="icon" href="images/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,7 +12,7 @@
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-  <link rel="manifest" href="images/manifest.json" />
+  <link rel="manifest" href="manifest.json" />
   <!--
       Notice the use of images in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -23,6 +23,10 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>send 4 fren</title>
+  <meta property="og:title" content="send 4 fren" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="%PUBLIC_URL%" />
+  <meta property="og:image" content="%PUBLIC_URL%/images/logo.png" />
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
   <link href="css/normalize.css" rel="stylesheet" type="text/css">

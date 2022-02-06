@@ -29,7 +29,7 @@ import { StringLiteralLike } from 'typescript';
 import { getParsedNftAccountsByOwner, isValidSolanaAddress, createConnectionConfig, } from "@nfteyez/sol-rayz";
 import { CastConfetti } from './Confetti';
 import { FormControl, Input, InputAdornment, FormHelperText, OutlinedInput } from '@material-ui/core';
-
+import { DisplayDate } from './DisplayDate';
 // import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import {
   EmailShareButton,
@@ -80,7 +80,7 @@ import {
 // Style for the connect button
 export const ConnectButton = styled(WalletDialogButton)`
 text-align: center;
-    width: 100%;
+    width: fit-contents;
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: #f7891e;
@@ -97,6 +97,15 @@ text-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  :hover {
+    background: #eb7500;
+    box-shadow: 0px 6px 0 #c06d19;
+  }
+  :active {
+    background-color: #f7891e;
+    box-shadow: 0 2px #442506;
+    transform: translateY(2px);
+  }
 `;
 
 // Style for the Mint button
@@ -118,7 +127,9 @@ export interface ThemeProps {
   name: string,
   description: string
   imgSrc: string,
-  id?: anchor.web3.PublicKey
+  id?: anchor.web3.PublicKey,
+  startDate?: Date,
+  endDate?: Date
 }
 
 export interface CollectionProps {
@@ -127,6 +138,8 @@ export interface CollectionProps {
   subtitle: string;
   description: string;
   imgSrc: string;
+  startDate?: Date;
+  endDate?: Date;
 
 }
 
@@ -211,11 +224,12 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
   // mutual.setTxId("2cshdLj3QCMfnvp3ihaKCMq2o3L1Mr64jBTYP7N8Lr4JArBdSHLpFKRrLegj6pv6K2SLFjtM7fncr5LCVaopFMvN")
 
   return (
-    <Container>
+    <Container style={{display: "flex", justifyContent: "center"}}>
       {!mutual.wallet.connected ? (
         <ConnectButton>Connect wallet</ConnectButton>
       ) : (
         <>
+          <div>
           <Header candyMachine={candyMachine} reloadWhen={mutual.isUserMinting} />
           <MintContainer>
             {candyMachine?.state.isActive &&
@@ -252,6 +266,7 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
             <MintFinish recipTxId={mutual?.recipTxId} txId={mutual?.txId} connection={info.connection} mutual={mutual} />
 
           </MintContainer>
+          </div>
         </>
       )}
       <Snackbar
@@ -486,6 +501,17 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
             <div>
               <h3 className="s4f_h3 subheading">{subtitle}</h3>
               <p className="s4f_par">{description}</p>
+              <h4 className='s4f_h4'>Start Date</h4>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <DisplayDate date={allCollections[getter].startDate} />
+              </div>
+              <h4 className='s4f_h4'>End Date</h4>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+                <DisplayDate date={allCollections[getter].endDate} />
+              </div>
+
+
             </div>
           </div>
           <div className="column-10 w-col w-col-6 w-col-small-6"><img src={image} loading="lazy" alt="" className="image-2" />
@@ -497,7 +523,7 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
 
       </div>
 
-    </section>
+    </section >
   )
 }
 
@@ -524,7 +550,7 @@ export const MintTheme: React.FC<{ allCandyMachines: (CandyMachineAccount | unde
       <p className="s4f_par s4f_theme_description">{allThemes[index].description}</p> </div>)
   }
   return (
-    <div style={{marginTop: "50px"}}>
+    <div style={{ marginTop: "50px" }}>
 
       {true ?
         (< div className="s4f_mint wf-section" >
@@ -588,6 +614,7 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
   { candyMachine, mutual, info }
 ) => {
   const [recipientAddress, setRecipientAddress] = useState<string>()
+
   // const related = ['send4fren']
   return (
     <div className="div-block-5" id="process-mint">
@@ -603,11 +630,11 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
         </div>
         <div className="tabs-content w-tab-content">
           <div data-w-tab="Tab 1" className="s4f_destination_mint w-tab-pane">
-            <div className="columns-7 w-row">
-            <h2 className="s4f_h3">enter your frens address</h2>
-              <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center" ,paddingBottom: "10px"}}>
+            <div >
+              <h2 className="s4f_h3">enter your frens address</h2>
+              <Box component="form" style={{ width: "100%", justifyContent: "center", display: "flex", alignItems: "center", paddingBottom: "10px" }}>
                 <FormControl style={{ width: "90%", textAlign: "center", background: "white", borderRadius: "25px", padding: "10px" }}>
-                  <Input style={{ color: "black"}} placeholder="solana address" onChange={(
+                  <Input style={{ color: "black" }} placeholder="solana address" onChange={(
                     ev: React.ChangeEvent<HTMLInputElement>,
                   ): void => {
                     setRecipientAddress(ev.target.value)
@@ -619,7 +646,11 @@ export const MintRecipient: React.FC<{ candyMachine: CandyMachineAccount | undef
                 {/* <TextField id="filled-basic" label="your frens wallet address" style={{color: "white"}} inputProps={{disableUnderline: true}} /> */}
                 {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
               </Box>
+              <div style={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
               {DisplayCandyMachine(candyMachine, mutual, info, recipientAddress)}
+              </div>
+              
+
             </div>
           </div>
           <div data-w-tab="Tab 2" className="s4f_destination_mint w-tab-pane w--tab-active">
