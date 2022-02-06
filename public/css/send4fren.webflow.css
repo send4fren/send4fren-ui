@@ -64,6 +64,28 @@
   -ms-transform: rotate(37deg);
   transform: rotate(37deg);
   text-align: left;
+  -webkit-animation: mover 2s infinite  alternate;
+  animation: mover 2s infinite  alternate;
+}
+
+@-webkit-keyframes mover {
+  0% { 
+    transform: translateY(0) rotate(37deg); 
+
+  }
+  100% { 
+    transform: translateY(-20px) rotate(37deg); 
+
+  }
+}
+@keyframes mover {
+  0% { 
+    transform: translateY(0) rotate(37deg); 
+}
+  100% { 
+    transform: translateY(-20px) rotate(37deg); 
+  
+  }
 }
 
 .social_button {
