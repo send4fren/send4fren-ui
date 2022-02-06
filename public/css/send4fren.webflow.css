@@ -1660,7 +1660,7 @@
   flex: 0 auto;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 1308px) {
   .s4f_mint {
     display: block;
   }
