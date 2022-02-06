@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     label: {
       paddingTop: "10px",
-      fontSize: 20,
+      fontSize: 15,
     }
   }),
 );
