@@ -229,7 +229,10 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
   return (
     <Container >
       {!mutual.wallet.connected ? (
-        <ConnectButton>Connect wallet</ConnectButton>
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <ConnectButton>Connect wallet</ConnectButton>
+        </div>
+        
       ) : (
         <>
           <Header candyMachine={candyMachine} reloadWhen={mutual.isUserMinting} />
