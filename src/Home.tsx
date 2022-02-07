@@ -180,7 +180,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               <div style={{ width: "100%", borderRadius: "25px", background: "rgba(28,12,57,0.5)" }}>
                 <h3 className="s4f_h3" style={{ marginTop: "20px", opacity: "100%" }}>Valentine&#x27;s Day Set</h3>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-                  <CoolCountdown date={new Date('07 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }}
+                  <CoolCountdown date={new Date('08 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }}
                     status={'OUT NOW'} setMintText={setMintText} />
                 </div>
 

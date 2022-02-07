@@ -75,7 +75,7 @@ const App = () => {
     [],
   );
 
-  let startDate = (new Date('07 Feb 2022 00:00:00 UTC+11'))
+  let startDate = (new Date('08 Feb 2022 00:00:00 UTC+11'))
   let endDate = (new Date('22 Feb 2022 00:00:00 UTC+11'))
 
   const nice: ThemeProps = {
