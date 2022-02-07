@@ -1661,7 +1661,7 @@
 }
 
 .auto-resizable-iframe {
-  max-width: 420px;
+  max-width: 60%;
   margin: 0px auto;
 }
 
