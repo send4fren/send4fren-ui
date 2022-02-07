@@ -512,8 +512,7 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
                 <DisplayDate date={allCollections[getter].startDate} />
               </div>
               <h4 className='s4f_h4'>End Date</h4>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px"}}>
                 <DisplayDate date={allCollections[getter].endDate} />
               </div>
 
