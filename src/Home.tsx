@@ -221,7 +221,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
         <h3 className="s4f_h3">
           More than just your typical NFT when you buy S4F</h3>
         <div className="s4f_par" >
-          Our mission is to be a sustainable project and onboard new-comers to NFT in an affordable yet fun way.
+          Our mission is to connect the NFT community together with a fun yet affordable avenue of NFT gift giving!
           <br /><br />Each card has been custom-made to suit the year's feel and emotion within the crypto community.
         </div>
         <div style={{ height: "20px" }} />
