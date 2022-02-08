@@ -22,6 +22,7 @@ import { GatewayProvider } from '@civic/solana-gateway-react';
 import { CastConfetti } from './Confetti';
 import { FormControl, Input, InputAdornment, FormHelperText, OutlinedInput } from '@material-ui/core';
 import { DisplayDate } from './DisplayDate';
+import Grid from '@material-ui/core/Grid';
 // import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import {
   // EmailShareButton,
@@ -143,34 +144,40 @@ export interface PhantomProps {
 }
 
 const facebookStyle = {
-  backgroundColor: "#4267b2",
-  width: "100%",
+  backgroundColor: "#3b5998",
+
+  // width: "100%",
   borderRadius: "35px",
   fontSize: "24px",
   marginTop: "5px",
   marginBottom: "5px",
   backgroundSize: "auto",
   backgroundPosition: "10px 0px",
-  padding: "5px",
+  // padding: "5px",
   fontFamily: "'Varela Round', sans-serif",
   boxShadow: "3px 3px 4px 0 #3a3a3a",
   color: "white",
-  alignItems: "center"
+  // display: "flex",
+  // alignItems: "center",
+  // justifyContent: "center"
 }
 
 const twitterStyle = {
   backgroundColor: "#00acee",
-  width: "100%",
+  // width: "100%",
   borderRadius: "35px",
   fontSize: "24px",
   marginTop: "5px",
   marginBottom: "5px",
   backgroundSize: "auto",
   backgroundPosition: "10px 0px",
-  padding: "5px",
+  // padding: "5px",
   fontFamily: "'Varela Round', sans-serif",
   boxShadow: "3px 3px 4px 0 #3a3a3a",
   color: "white",
+  // display: "flex",
+  // alignItems: "center",
+  // justifyContent: "center"
   // alignItems: "center",
   // alignContent: "center",
   // margin: "auto"
@@ -178,17 +185,20 @@ const twitterStyle = {
 
 const redditStyle = {
   backgroundColor: "#FF4301",
-  width: "100%",
+  // width: "100%",
   borderRadius: "35px",
   fontSize: "24px",
   marginTop: "5px",
   marginBottom: "5px",
   backgroundSize: "auto",
   backgroundPosition: "10px 0px",
-  padding: "5px",
+  // padding: "5px",
   fontFamily: "'Varela Round', sans-serif",
   boxShadow: "3px 3px 4px 0 #3a3a3a",
   color: "white",
+  // display: "flex",
+  // alignItems: "center",
+  // justifyContent: "center"
 }
 
 interface CandyMutualProps {
@@ -213,17 +223,25 @@ export const DisplayCandyMachine = (candyMachine: CandyMachineAccount | undefine
   // REMOVE LATER
   // mutual.setTxId("2cshdLj3QCMfnvp3ihaKCMq2o3L1Mr64jBTYP7N8Lr4JArBdSHLpFKRrLegj6pv6K2SLFjtM7fncr5LCVaopFMvN")
 
+
+
+
+  // REMEMBER TO REMOVE
+  // mutual.setTxId("2UWNiMFMHy1gmP7Yd2EmsFn812m6BDndcSv77Z8wcTzN9QCZFZybByzX9vTFVF7mBYo8e7PiwRJRqSqHCco1Jb7x")
+  // mutual.setMintSuccess(true)
+
+
   return (
     <Container >
       {!mutual.wallet.connected ? (
-        <div style={{display: "flex", justifyContent: "center"}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <ConnectButton>Connect wallet</ConnectButton>
         </div>
-        
+
       ) : (
         <>
           <Header candyMachine={candyMachine} reloadWhen={mutual.isUserMinting} />
-          <div style={{width: "100%"}}>
+          <div style={{ width: "100%" }}>
             <div>
               {candyMachine?.state.isActive &&
                 candyMachine?.state.gatekeeper &&
@@ -499,7 +517,7 @@ export const MintCollection: React.FC<{ allCollections: CollectionProps[], sette
                 <DisplayDate date={allCollections[getter].startDate} />
               </div>
               <h4 className='s4f_h4'>End Date</h4>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px"}}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px" }}>
                 <DisplayDate date={allCollections[getter].endDate} />
               </div>
 
@@ -660,6 +678,8 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
   const [found, setFound] = useState(false)
   const [isFinding, setIsFinding] = useState(false)
   const [loadText, setLoadText] = useState("finding photo on solana...")
+  const [requested, setRequested] = useState(false)
+  let [oldTxId, setOldTxId] = useState<string>()
   // if (txId) {
   // const getFileUrl = async () => {
   //   if (image) {
@@ -674,6 +694,7 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
   // }
   // const [data, setData] = useState<(number | null | undefined)>();
 
+
   const getImageContent = () => {
     if (found) {
       return (<div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -685,7 +706,7 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
     } else if (isFinding) {
       return (
         <div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' , minHeight: "80vh"}}>
             <img src='images/emptyCard.svg' style={{ width: "90%" }} />
             <div style={{ display: 'flex', justifyContent: 'center', position: "absolute", top: "35%" }} >
               <h3 className="s4f_h3">pls wait! <br />{loadText}</h3>
@@ -702,16 +723,23 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
   const wait = (ms: number) => new Promise(res => setTimeout(res, ms));
 
   const txInfo = (async () => {
-
+    if (isFinding) {return}
     if (recipTxId && mutual.mintSuccess) {
 
       // Wait for a result 
       let result = await connection.getTransaction(recipTxId)
       setIsFinding(true)
       setFound(false)
+      setRequested(true)
       while (!result) {
-        await wait(1000)
-        result = await connection.getTransaction(recipTxId)
+        try {
+          await wait(1000)
+          result = await connection.getTransaction(recipTxId)
+        }
+        catch (e) {
+          console.log(e)
+        }
+
       }
       console.log("Transaction found", result)
       setLoadText("found ur transaction baby")
@@ -728,16 +756,19 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
           const tokenMetadata = await programs.metadata.Metadata.load(connection, metadataPDA);
           console.log("token Metadata", tokenMetadata)
 
-          const image = await fetch(tokenMetadata.data.data.uri).then(async (link) => {
+          const photo = await fetch(tokenMetadata.data.data.uri).then(async (link) => {
             return await fetch(link.url).then((data) => {
               return data.json()
             })
           })
-          setImage(image.image)
+          setImage(photo.image)
           setFound(true)
+          setRequested(false)
+          setIsFinding(false)
           mutual.setMintSuccess(false)
           console.log("Image found", image)
           setLoadText("finding photo on solana...")
+          setOldTxId(txId)
           // for (var nft of tokenMetadata) {
           //   // Locate the matching NFT of the one recently purchased
           //   if (nft.mint == token) {
@@ -761,8 +792,27 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
 
   useEffect(() => {
     txInfo()
-    getImageContent()
-  }, [txId, mutual.mintSuccess])
+    // getImageContent()
+  }, [txId])
+
+  const download = async () => {
+    if (image) {
+      await fetch(image, { method: 'GET', headers: { 'Content-Type': 'image/png' } })
+        .then((response) => response.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 's4f_card.png');
+
+          document.body.appendChild(link);
+          link.click();
+          link.parentNode?.removeChild(link)
+        })
+    }
+
+  }
+
 
   const quote = 'Speaking love in Web3 language'
   // const  image = 'https://iq4gqrdbgs7kn2uferjmodv2xclcrzeejgdfh6rccreujxpyorga.arweave.net/RDhoRGE0vqbqhSRSxw66uJYo5IRJhlP6IhRJRN34dEw/?ext=png'
@@ -772,33 +822,63 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
       {
         txId ?
           (
-            <div className="columns-6 w-row" >
+            <div className="columns-11 w-row w-row" >
               <div className="s4f_minted_card w-col w-col-6" >
                 {getImageContent()}
               </div>
               <div className="column-9 w-col w-col-6">
-                {/* <button onClick={async () => txInfo()} >View</button> */}
-                <a href={"https://explorer.solana.com/tx/" + txId} target="_blank" className="s4f_sol_exp">click here to see transaction on Solana Explorer!</a>
-                <h1 className="s4f_h3">share on</h1>
-                <div className="div-block-7">
-                  <FacebookShareButton style={facebookStyle}
-                    quote={quote}
-                    hashtag='#send4fren'
-                    url={image ? (image) : ''}>
-                    <FacebookIcon size={40} round={true} />
-                  </FacebookShareButton>
-                  <TwitterShareButton style={twitterStyle} url={image ? (image) : ''} title={quote}
-                    via='send4fren'
-                    related={['send4fren']}
-                    hashtags={['send4fren', 'nft', 'nftart', 'crypto', 'weeb', 'celebration', 'greetingcards', 'hallmark', 'solana', 'investing']}>
-                    <TwitterIcon size={40} round={true} />
-                  </TwitterShareButton>
-                  <RedditShareButton style={redditStyle} title={quote} url={image ? (image) : ''}>
-                    <RedditIcon size={40} round={true} />
-                  </RedditShareButton>
 
-                  {/* {data} */}
+                {/* <button onClick={async () => txInfo()} >View</button> */}
+                <a href={"https://explorer.solana.com/tx/" + txId} target="_blank" className="s4f_sol_exp" style={{textAlign: "center"}}>click here to see transaction on Solana Explorer!</a>
+                <h1 className="s4f_h3">share on</h1>
+
+                <Grid container direction="row" wrap="nowrap" style={{ width: "300px"}}>
+                  {/* <Grid container direction="row" wrap="nowrap" > */}
+                  <Grid container direction="row" wrap="nowrap">
+                    <div>
+                      <FacebookShareButton style={facebookStyle}
+                        quote={quote}
+                        hashtag='#send4fren'
+                        url={image ? (image) : ''}>
+                        <FacebookIcon size={60} round={true} />
+                      </FacebookShareButton>
+                    </div>
+                  </Grid>
+                  <Grid container direction="row" wrap="nowrap">
+                    <div>
+                      <TwitterShareButton style={twitterStyle} url={image ? (image) : ''} title={quote}
+                        via='send4fren'
+                        related={['send4fren']}
+                        hashtags={['send4fren', 'nft', 'nftart', 'crypto', 'weeb', 'celebration', 'greetingcards', 'hallmark', 'solana', 'investing']}>
+                        <TwitterIcon size={60} round={true} />
+                      </TwitterShareButton>
+                    </div>
+                  </Grid>
+                  <Grid container direction="row" wrap="nowrap">
+                    <div>
+                      <RedditShareButton style={redditStyle} title={quote} url={image ? (image) : ''}>
+                        <RedditIcon size={60} round={true} />
+                      </RedditShareButton>
+                    </div>
+                  </Grid>
+                  <Grid container direction="row" wrap="nowrap">
+                    <div>
+                      <button className='download-button' onClick={async () => await download()}>
+                        <img src='/images/download.png' style={{ width: "22px" }} />
+                      </button>
+                    </div>
+                  </Grid>
+                  {/* </Grid> */}
+                </Grid>
+
+                <div className="div-block-7">
+
+
+
                 </div>
+
+
+
               </div>
             </div >
 

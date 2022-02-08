@@ -89,6 +89,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
     (<option value="valentines">{col.title}</option>)
   )
 
+  // let imgLink = "https://453bycuss4mbnujbt3lna62z44cbu5fzy5jwihssshbw6hh5kwya.arweave.net/53YcCpKXGBbRIZ7W0HtZ5wQadLnHU2QeUpHDbxz9VbA?fbclid=IwAR1ifYDSZUbTOBlVZase10T-KMhQ5a8-5Dkrat3RiPvsK6xCPsu9HorNbPM"
 
 
   return (
@@ -143,11 +144,10 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               <div style={{ width: "100%", borderRadius: "25px", background: "rgba(28,12,57,0.5)" }}>
                 <h3 className="s4f_h3" style={{ marginTop: "20px", opacity: "100%" }}>Valentine&#x27;s Day Set</h3>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-                
-                
-                {/* <a href="https://4dkswa7bynphhtp6r6xnxepzqbvebsmewivjzvbl3hru4ytm7fgq.arweave.net/4NUrA-HDXnPN_o-u25H5gGpAyYSyKpzUK9njTmJs-U0/?fbclid=IwAR3G2E8D6qD3_cBdHn2Js3kBfEpAPv7GOeMbHoIVtxyy9Y3e1Bk8za88oj8" download="image.png">Download</a> */}
-                
-                
+
+                  {/* <a href="https://4dkswa7bynphhtp6r6xnxepzqbvebsmewivjzvbl3hru4ytm7fgq.arweave.net/4NUrA-HDXnPN_o-u25H5gGpAyYSyKpzUK9njTmJs-U0/?fbclid=IwAR3G2E8D6qD3_cBdHn2Js3kBfEpAPv7GOeMbHoIVtxyy9Y3e1Bk8za88oj8" download="image.png">Download</a> */}
+
+
                   <CoolCountdown date={new Date('08 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }}
                     status={'OUT NOW'} setMintText={setMintText} />
                 </div>
