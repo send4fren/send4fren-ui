@@ -196,7 +196,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
       </div>
 
       <div className="section-3 wf-section">
-        <div className="div-block-9">
+        {/* <div className="div-block-9">
           <div className="s4f_socials_array w-row">
             <div className="s4f_socials w-col w-col-4">
               <a href={twitter} target="_blank">
@@ -215,7 +215,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="w-container">
         <h3 className="s4f_h3">

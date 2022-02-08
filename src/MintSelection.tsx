@@ -777,7 +777,7 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
     getImageContent()
   }, [txId, mutual.mintSuccess])
 
-  const quote = 'Just sent @[NAME] some S4F love'
+  const quote = 'Speaking love in Web3 language'
   // const  image = 'https://iq4gqrdbgs7kn2uferjmodv2xclcrzeejgdfh6rccreujxpyorga.arweave.net/RDhoRGE0vqbqhSRSxw66uJYo5IRJhlP6IhRJRN34dEw/?ext=png'
 
   return (
