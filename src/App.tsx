@@ -81,7 +81,7 @@ const App = () => {
   const nice: ThemeProps = {
     name: 'Nice',
     description: "Send them a sweet message they'll be thinking about all day",
-    imgSrc: "images/SWEET_ShibaCupid.png",
+    imgSrc: "/images/SWEET_ShibaCupid.png",
     id: niceCandyMachineId, 
     startDate: startDate,
     endDate: endDate
@@ -89,7 +89,7 @@ const App = () => {
   const naughty: ThemeProps = {
     name: 'Naughty',
     description: "Show them how they make you feel down south",
-    imgSrc: "images/NAUGHTY_Ahegao.png",
+    imgSrc: "/images/NAUGHTY_Ahegao.png",
     id: naughtyCandyMachineId,
     startDate: startDate,
     endDate: endDate
@@ -97,7 +97,7 @@ const App = () => {
   const savage: ThemeProps = {
     name: 'Savage',
     description: "Roast them because you care about them",
-    imgSrc: "images/SAVAGE_Monkey.png",
+    imgSrc: "/images/SAVAGE_Monkey.png",
     id: savageCandyMachineId,
     startDate: startDate,
     endDate: endDate
@@ -107,7 +107,7 @@ const App = () => {
     title: "Valentine's Day",
     subtitle: "Spoil 'em",
     description: "1402 unique Valentine's day themed greeting cards with Nice, Naughty and Savage crypto memes to make hearts flutter, parts throbbing or blood boiling",
-    imgSrc: "images/446.png",
+    imgSrc: "/images/446.png",
     startDate: startDate,
     endDate: endDate
 
@@ -117,19 +117,19 @@ const App = () => {
   const a: ThemeProps = {
     name: 'Stupid',
     description: "Something stupid",
-    imgSrc: "images/SWEET_ShibaCupid.png",
+    imgSrc: "/images/SWEET_ShibaCupid.png",
     id: niceCandyMachineId,
   }
   const b: ThemeProps = {
     name: 'Funny',
     description: "Something Retarded",
-    imgSrc: "images/NAUGHTY_Ahegao.png",
+    imgSrc: "/images/NAUGHTY_Ahegao.png",
     id: naughtyCandyMachineId
   }
   const c: ThemeProps = {
     name: 'Retarded',
     description: "Something Ass",
-    imgSrc: "images/SAVAGE_AnimeWaifu.png",
+    imgSrc: "/images/SAVAGE_AnimeWaifu.png",
     id: savageCandyMachineId
   }
 
@@ -138,7 +138,7 @@ const App = () => {
   //   title: "Birthday Day",
   //   subtitle: "Fuck them up",
   //   description: "1000 ways to make it go with a bang",
-  //   imgSrc: "images/emptyCard.svg",
+  //   imgSrc: "/images/emptyCard.svg",
     
 
   // }

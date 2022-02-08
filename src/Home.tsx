@@ -96,7 +96,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
         role="banner" className="navbar w-nav">
         <div className="container-3 w-container">
-          <a href="/" className="brand-2 w-nav-brand"><img src="images/Frame-15.svg" loading="lazy" alt="" /></a>
+          <a href="/" className="brand-2 w-nav-brand"><img src="/images/Frame-15.svg" loading="lazy" alt="" /></a>
           <a href="/" className="brand w-nav-brand">
             <h3 className="s4f_h3 s4f_logo_title">send 4 fren</h3>
           </a>
@@ -109,17 +109,17 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
             <div className="s4f_socials_array s4f_menu w-row">
               <div className="s4f_socials w-col w-col-4">
                 <a href={twitter} target="_blank" >
-                  <img src="images/twitter.png" loading="lazy" alt="" />
+                  <img src="/images/twitter.png" loading="lazy" alt="" />
                 </a>
               </div>
               <div className="s4f_socials w-col w-col-4" >
                 <a href={discord} target="_blank">
-                  <img src="images/discord.png" loading="lazy" alt="" />
+                  <img src="/images/discord.png" loading="lazy" alt="" />
                 </a>
               </div>
               <div className="s4f_socials w-col w-col-4">
                 <a href={instagram} target="_blank">
-                  <img src="images/instagram.png" loading="lazy" alt="" />
+                  <img src="/images/instagram.png" loading="lazy" alt="" />
                 </a>
               </div>
             </div>
@@ -132,10 +132,10 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
       <div className="section wf-section">
         <div className="container w-container">
           <div className="s4f_hero w-row">
-            <div className="column-2 w-col w-col-6 w-col-small-6"><img src="images/NFT_Trial.png" loading="lazy"
+            <div className="column-2 w-col w-col-6 w-col-small-6"><img src="/images/NFT_Trial.png" loading="lazy"
               sizes="(max-width: 479px) 100vw, (max-width: 767px) 67vw, (max-width: 991px) 461.75762939453125px, 60vw"
               height=""
-              srcSet="images/NFT_Trial-p-500.png 500w, images/NFT_Trial-p-800.png 800w, images/NFT_Trial-p-1080.png 1080w, images/NFT_Trial.png 1600w"
+              srcSet="/images/NFT_Trial-p-500.png 500w, images/NFT_Trial-p-800.png 800w, images/NFT_Trial-p-1080.png 1080w, images/NFT_Trial.png 1600w"
               alt="" className="image" /></div>
             <div className="column w-col w-col-6 w-col-small-6">
               <h1 className="s4f_h1"><strong>Send sumthin 4 a fren or sumthin 4 urself, u lonely fuk.</strong></h1>
@@ -169,17 +169,17 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
             <div className="s4f_socials w-col w-col-4">
               <a href={twitter} target="_blank">
 
-                <img src="images/twitter.png" loading="lazy" alt="" />
+                <img src="/images/twitter.png" loading="lazy" alt="" />
               </a>
             </div>
             <div className="s4f_socials w-col w-col-4">
               <a href={discord} target="_blank">
-                <img src="images/discord.png" loading="lazy" alt="" />
+                <img src="/images/discord.png" loading="lazy" alt="" />
               </a>
             </div>
             <div className="s4f_socials w-col w-col-4">
               <a href={instagram} target="_blank"><img
-                src="images/instagram.png" loading="lazy" alt="" />
+                src="/images/instagram.png" loading="lazy" alt="" />
               </a>
             </div>
           </div>

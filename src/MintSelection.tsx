@@ -527,7 +527,7 @@ export const MintTheme: React.FC<{ allCandyMachines: (CandyMachineAccount | unde
   const [recipient, setRecipient] = useState<number>(0)
   // if (allCandyMachines[1]?.state.isPresale) {
   const noTheme = (<div><img
-    src="images/blankCard.svg" loading="lazy" width="66" sizes="(max-width: 479px) 76vw, 66px"
+    src="/images/blankCard.svg" loading="lazy" width="66" sizes="(max-width: 479px) 76vw, 66px"
     alt="" className="image-13" />
     <div className="s4f_h3">Theme</div>
     <p className="s4f_par s4f_theme_description">Not yet available!</p></div>)
