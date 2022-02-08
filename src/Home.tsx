@@ -140,7 +140,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
           <nav role="navigation" className="nav-menu w-nav-menu">
             <a href="/" aria-current="page" className="s4f_nav_link w-nav-link w--current">Home</a>
             <a href="about#about" className="s4f_nav_link w-nav-link"><span>About</span></a>
-            <a href="about#instruction" className="s4f_nav_link w-nav-link">Instructions</a>
+            <a href="instruction#instruction" className="s4f_nav_link w-nav-link">Instructions</a>
             {/* {!wallet.connected ? (<a> <Container><ConnectButton>Connect wallet</ConnectButton></Container></a>) : (<a href="#mint-start" className="s4f_mint_button s4f_nav_version w-nav-link">mint now</a>)} */}
             <a href="#mint-start" className="s4f_mint_button s4f_nav_version w-nav-link">MINT</a>
             <div className="s4f_socials_array s4f_menu w-row">
@@ -196,7 +196,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
       </div>
 
       <div className="section-3 wf-section">
-        {/* <div className="div-block-9">
+        <div className="div-block-9">
           <div className="s4f_socials_array w-row">
             <div className="s4f_socials w-col w-col-4">
               <a href={twitter} target="_blank">
@@ -215,7 +215,7 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               </a>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <div className="w-container">
         <h3 className="s4f_h3">
