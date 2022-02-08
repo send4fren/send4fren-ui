@@ -11,7 +11,6 @@ import { programs } from "@metaplex/js"
 
 import styled from 'styled-components';
 import { Container, Link, Snackbar, CircularProgress, Box } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
 import { PublicKey } from '@solana/web3.js';
 import { useWallet, WalletContextState } from '@solana/wallet-adapter-react';
@@ -20,61 +19,54 @@ import { AlertState } from './utils';
 import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
-import { toDate, formatNumber } from './utils';
-import Typography from '@material-ui/core/Typography';
-import { TextField } from '@material-ui/core';
-import { string } from 'prop-types';
-import { LensTwoTone } from '@material-ui/icons';
-import { StringLiteralLike } from 'typescript';
-import { getParsedNftAccountsByOwner, isValidSolanaAddress, createConnectionConfig, } from "@nfteyez/sol-rayz";
 import { CastConfetti } from './Confetti';
 import { FormControl, Input, InputAdornment, FormHelperText, OutlinedInput } from '@material-ui/core';
 import { DisplayDate } from './DisplayDate';
 // import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import {
-  EmailShareButton,
+  // EmailShareButton,
   FacebookShareButton,
-  HatenaShareButton,
-  InstapaperShareButton,
-  LineShareButton,
-  LinkedinShareButton,
-  LivejournalShareButton,
-  MailruShareButton,
-  OKShareButton,
-  PinterestShareButton,
-  PocketShareButton,
+  // HatenaShareButton,
+  // InstapaperShareButton,
+  // LineShareButton,
+  // LinkedinShareButton,
+  // LivejournalShareButton,
+  // MailruShareButton,
+  // OKShareButton,
+  // PinterestShareButton,
+  // PocketShareButton,
   RedditShareButton,
-  TelegramShareButton,
-  TumblrShareButton,
+  // TelegramShareButton,
+  // TumblrShareButton,
   TwitterShareButton,
-  ViberShareButton,
-  VKShareButton,
-  WhatsappShareButton,
-  WorkplaceShareButton
+  // ViberShareButton,
+  // VKShareButton,
+  // WhatsappShareButton,
+  // WorkplaceShareButton
 } from "react-share";
 
 import {
-  EmailIcon,
+  // EmailIcon,
   FacebookIcon,
-  FacebookMessengerIcon,
-  HatenaIcon,
-  InstapaperIcon,
-  LineIcon,
-  LinkedinIcon,
-  LivejournalIcon,
-  MailruIcon,
-  OKIcon,
-  PinterestIcon,
-  PocketIcon,
+  // FacebookMessengerIcon,
+  // HatenaIcon,
+  // InstapaperIcon,
+  // LineIcon,
+  // LinkedinIcon,
+  // LivejournalIcon,
+  // MailruIcon,
+  // OKIcon,
+  // PinterestIcon,
+  // PocketIcon,
   RedditIcon,
-  TelegramIcon,
-  TumblrIcon,
+  // TelegramIcon,
+  // TumblrIcon,
   TwitterIcon,
-  ViberIcon,
-  VKIcon,
-  WeiboIcon,
-  WhatsappIcon,
-  WorkplaceIcon
+  // ViberIcon,
+  // VKIcon,
+  // WeiboIcon,
+  // WhatsappIcon,
+  // WorkplaceIcon
 } from "react-share";
 
 // Style for the connect button
@@ -108,11 +100,6 @@ text-align: center;
   }
 `;
 
-// Style for the Mint button
-const MintContainer = styled.div`
-  width: 100%;
-  margin: 0 auto;
-`; // add your owns styles here
 
 // Minting information necessary to run the candy machine
 // collection holds each individual candy machine

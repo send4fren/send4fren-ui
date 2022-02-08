@@ -2,50 +2,13 @@ import { useEffect, useMemo, useState, useCallback } from 'react';
 import * as anchor from '@project-serum/anchor';
 
 import { CollectionProps, MintProps, PhantomProps, MintSection, ConnectButton } from './MintSelection';
-import styled from 'styled-components';
-import { Container, Select, Snackbar, FormControl, InputLabel, MenuItem } from '@material-ui/core';
-
-import { toDate, formatNumber } from './utils';
-import Paper from '@material-ui/core/Paper';
-import Alert from '@material-ui/lab/Alert';
-import { PublicKey } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletDialogButton } from '@solana/wallet-adapter-material-ui';
 import { CoolCountdown, MintCountdown } from './MintCountdown';
 import {
-  awaitTransactionSignatureConfirmation,
   CandyMachineAccount,
-  CANDY_MACHINE_PROGRAM,
   getCandyMachineState,
-  mintOneToken,
 } from './candy-machine';
-import { AlertState } from './utils';
-import { Header } from './Header';
-import { MintButton } from './MintButton';
-import { GatewayProvider } from '@civic/solana-gateway-react';
-import { Grid } from '@material-ui/core';
-// import { DimensionedExample } from './Confetti';
 
-// import Fireworks from '@react-canvas-confetti'
-// const ConnectButton = styled(WalletDialogButton)`
-//   width: 100%;
-//   height: 60px;
-//   margin-top: 10px;
-//   margin-bottom: 5px;
-//   background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
-//   color: white;
-//   font-size: 16px;
-//   font-weight: bold;
-// `;
-
-
-
-const MintContainer = styled.div``; // add your owns styles here
-
-
-// export interface HomeProps {
-
-// }
 
 export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[], props: MintProps }> = ({ basedOnIdx, collections, props }) => {
   const twitter = "https://twitter.com/Send4Fren"
@@ -180,6 +143,11 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
               <div style={{ width: "100%", borderRadius: "25px", background: "rgba(28,12,57,0.5)" }}>
                 <h3 className="s4f_h3" style={{ marginTop: "20px", opacity: "100%" }}>Valentine&#x27;s Day Set</h3>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                
+                
+                {/* <a href="https://4dkswa7bynphhtp6r6xnxepzqbvebsmewivjzvbl3hru4ytm7fgq.arweave.net/4NUrA-HDXnPN_o-u25H5gGpAyYSyKpzUK9njTmJs-U0/?fbclid=IwAR3G2E8D6qD3_cBdHn2Js3kBfEpAPv7GOeMbHoIVtxyy9Y3e1Bk8za88oj8" download="image.png">Download</a> */}
+                
+                
                   <CoolCountdown date={new Date('08 Feb 2022 00:00:00 UTC+11')} style={{ justifyContent: 'flex-end' }}
                     status={'OUT NOW'} setMintText={setMintText} />
                 </div>
@@ -231,6 +199,8 @@ export const Home: React.FC<{ basedOnIdx: number, collections: CollectionProps[]
     </div>
   )
 };
+
+
 
 
 export default Home;

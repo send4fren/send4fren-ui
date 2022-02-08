@@ -40,6 +40,7 @@
     "react-share": "^4.4.0",
     "react-sizeme": "^3.0.2",
     "react-twitter-embed": "^4.0.4",
+    "react-url-image-downloader": "^1.0.2",
     "react-use-window-size": "^1.0.1",
     "styled-components": "^5.3.1",
     "ts-node": "^10.4.0",
