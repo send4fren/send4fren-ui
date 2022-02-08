@@ -793,7 +793,7 @@ const MintFinish: React.FC<{ recipTxId: string | undefined, txId: string | undef
   useEffect(() => {
     txInfo()
     // getImageContent()
-  }, [txId])
+  }, [txId, mutual.mintSuccess])
 
   const download = async () => {
     if (image) {
