@@ -5,7 +5,7 @@ This project was run live in February 2022 and launched a Valentine's Day NFT se
 
 This project currently no longer being continued.
 
-![](https://github.com/send4fren/send4fren-ui/demo.gif | width=100)
+![](https://github.com/send4fren/send4fren-ui/demo.gif)
 
 <img src="https://github.com/send4fren/send4fren-ui/demo.gif" data-canonical-src="https://github.com/send4fren/send4fren-ui/demo.gif" width="200" height="400" />
 
