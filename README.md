@@ -6,6 +6,7 @@ This project was run live in February 2022 and launched a Valentine's Day NFT se
 This project is currently no longer being continued.
 
 # Interface
+The interface is highly responsive and can be used on both PC and Mobile applications.
 
 | PC | Mobile |
 | --- | ------ |
