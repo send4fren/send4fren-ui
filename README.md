@@ -3,14 +3,14 @@ Send4Fren is unique NFT project designed to allow users to send NFT's directly t
 
 This project was run live in February 2022 and launched a Valentine's Day NFT set that lasted 2 weeks. 
 
-This project currently no longer being continued.
+This project is currently no longer being continued.
 
-<img src="https://github.com/send4fren/send4fren-ui/demo.gif" width=1000>
+# Interface
 
-![](https://github.com/send4fren/send4fren-ui/demo.gif)
-![](https://github.com/send4fren/send4fren-ui/demo-mobile.gif)
+| PC | Mobile |
+| --- | ------ |
+| <img src="https://github.com/send4fren/send4fren-ui/blob/main/demo.gif"> | <img src="https://github.com/send4fren/send4fren-ui/blob/main/demo-mobile.gif" style="  display: block; margin-left: auto; margin-right: auto; width: 50%;"> |
 
-<img src="https://github.com/send4fren/send4fren-ui/demo.gif" data-canonical-src="https://github.com/send4fren/send4fren-ui/demo.gif" width="200" height="400" />
 
 # Install Instructions
 
